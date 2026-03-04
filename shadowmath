@@ -1,0 +1,18 @@
+#!/bin/bash
+python3 - << 'EOF'
+from heart_false import FalseHeartPulseMachine
+from shadow_cycle import ShadowCycle
+import time
+
+h = FalseHeartPulseMachine()
+shadow = ShadowCycle(h)
+
+# turn complexity ON by default
+shadow.complex_machine.turn_on()
+
+h.turn_on()
+
+while True:
+    shadow.run()
+    time.sleep(0.5)
+

@@ -1,0 +1,165 @@
+# ============================
+# QUEST MACHINE VIEWER — MYTHIC VERSION (with Character Panel)
+# ============================
+
+from quest_machine import QuestMachine
+from quest_machine_solver import SolverMachine
+from rule_hub import load_rules_into
+
+import time
+import os
+import itertools
+
+
+# Track how many glyphs have failed to form
+BLOWUP_COUNT = 0
+
+
+# ----------------------------
+# Utility
+# ----------------------------
+
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+# ----------------------------
+# Emoji Personality Logic
+# ----------------------------
+
+def get_emoji_for_result(result: dict, success: bool):
+    """Assign emoji personality based on solver output."""
+    if any(k in result for k in ["gremlin", "chaos", "math_block_corrupted"]):
+        return "🐉"   # gremlin corruption
+
+    if not success:
+        return "🔥"   # meltdown / sealed glyph
+
+    if "fallback" in result:
+        return "😵‍💫"  # defaulted
+
+    return "🧮"  # clean solve
+
+
+# ----------------------------
+# Equation Log (emoji-based)
+# ----------------------------
+
+def render_equation_log(solver: SolverMachine):
+    print("  EQUATION LOG:")
+    print("  -------------")
+
+    for eq in solver.equation_memory:
+        if "gremlin" in eq or "chaos" in eq or "corrupted" in eq:
+            emoji = "🐉"
+        elif "fallback" in eq:
+            emoji = "😵‍💫"
+        else:
+            emoji = "🧮"
+
+        print(f"    {emoji}  {eq}")
+
+    print()
+
+
+# ----------------------------
+# First‑Person Chamber Renderer
+# ----------------------------
+
+def render_first_person(quest, solver: SolverMachine, cycles=20, delay=0.08):
+    global BLOWUP_COUNT
+
+    # Solve the quest
+    result = solver.solve_math_block(
+        math_block=quest.math_block,
+        interpretation_block=quest.interpretation_block
+    )
+
+    # Determine mythic success state
+    gremlin_hit = any(k in result for k in ["gremlin", "chaos", "math_block_corrupted"])
+    defaulted = "fallback" in result
+
+    success = not gremlin_hit and not defaulted
+
+    # Mythic glyph state
+    if gremlin_hit:
+        glyph_state = "🐉💥  GLYPH CORRUPTED"
+        granted_math_block = "🐉 THE GLYPH WRITHES AND TWISTS"
+    elif defaulted:
+        glyph_state = "⛔🔥  GLYPH SEALED"
+        granted_math_block = "⛔ THE GLYPH REFUSES TO FORM"
+    else:
+        glyph_state = "🧮  GLYPH FORMED"
+        granted_math_block = quest.math_block
+
+    # Count failures
+    if not success:
+        BLOWUP_COUNT += 1
+
+    # Emoji personality
+    face = get_emoji_for_result(result, success)
+
+    # Drift animation
+    drift_pattern = [0, 1, 2, 1]
+    drift_cycle = itertools.cycle(drift_pattern)
+
+    for _ in range(cycles):
+        offset = next(drift_cycle)
+        clear()
+
+        print("╔" + "═" * 58 + "╗")
+        print("║" + f" QUEST MACHINE {face} — CHAMBER OF GLYPHS ".center(58) + "║")
+        print("╚" + "═" * 58 + "╝")
+        print()
+
+        print("  GLYPH STATE:", glyph_state)
+        print()
+
+        print("  MATH GLYPH:")
+        print(" " * (4 + offset) + granted_math_block)
+        print()
+
+        print("  INTERPRETATION GLYPH:")
+        print(" " * (4 + offset) + quest.interpretation_block)
+        print()
+
+        print("  THE CATHEDRAL WHISPERS:")
+        print(f"    {quest.quest_text}")
+        print()
+
+        # ----------------------------
+        # CHARACTER PANEL
+        # ----------------------------
+        char = quest.character
+        print("  CHARACTER RECEIVES THIS QUEST:")
+        print(f"    Mythic Name:     {char.nameheart['mythic']}")
+        print(f"    Proto Name:      {char.nameheart['proto']}")
+        print(f"    Spark:           {char.spark}")
+        print(f"    Forces:          {char.forces}")
+        print(f"    Wounds:          {char.wounds}")
+        print()
+
+        print("  SOLVER SPEAKS:")
+        print(f"    {result}")
+        print()
+
+        print(f"  GLYPHS THAT FAILED TO FORM: {BLOWUP_COUNT}")
+        print()
+
+        render_equation_log(solver)
+
+        time.sleep(delay)
+
+
+# ----------------------------
+# Stand‑Alone Viewer Entry Point
+# ----------------------------
+
+def run_quest_machine_viewer():
+    qm = QuestMachine()
+    quest = qm.next()   # ← Quest Machine output (with Character attached)
+
+    solver = SolverMachine()
+    load_rules_into(solver)  # middle layer
+
+    render_first_person(quest, solver)

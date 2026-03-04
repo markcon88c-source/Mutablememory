@@ -1,0 +1,77 @@
+import random
+import numpy as np
+
+class MemoryOrgan:
+    """
+    A simple memory organ with:
+    - short-term memory (list of strings)
+    - long-term memory (list of strings)
+    - memory score (float)
+    - character presence (float)
+    """
+
+    def __init__(self):
+        self.short_memory = []
+        self.long_memory = []
+        self.memory_score = 0.0
+        self.character_presence = 0.0
+
+    def compute_memory_score(self, mood_vector):
+        """
+        Compute a memory score based on mood and randomness.
+        mood_vector is a dict like:
+        { "calm": x, "alert": y }
+        """
+        calm = mood_vector.get("calm", 0.0)
+        alert = mood_vector.get("alert", 0.0)
+
+        base = (calm * 0.4) + (alert * 0.6)
+        noise = random.uniform(0.0, 0.3)
+
+        score = base + noise
+        return score
+
+    def store_sentence(self, sentence, score):
+        """
+        Store a sentence in short-term memory.
+        Promote to long-term if score is high.
+        """
+        self.short_memory.append(sentence)
+
+        if score > 0.9:
+            self.long_memory.append(sentence)
+            return "Promoted to long-term memory"
+
+        return "Stored in short-term memory"
+
+    def update_character_presence(self, score):
+        """
+        Character presence grows slowly with memory activity.
+        """
+        inc = score * 0.05
+        self.character_presence += inc
+
+        if self.character_presence > 1.0:
+            self.character_presence = 1.0
+
+    def process(self, english_sentence, mood_vector):
+        """
+        Main entry point.
+        Returns:
+            memory_score (float)
+            stored (bool)
+            reason (str)
+        """
+        score = self.compute_memory_score(mood_vector)
+        self.memory_score = score
+
+        if score > 0.5:
+            reason = self.store_sentence(english_sentence, score)
+            stored = True
+        else:
+            reason = "Not stored"
+            stored = False
+
+        self.update_character_presence(score)
+
+        return score, stored, reason

@@ -1,0 +1,82 @@
+p# =========================
+# sentence_organ.py
+# =========================
+
+class SentenceOrgan:
+    def __init__(self):
+        self.last_sentence = ""
+        self.next_sentence = ""
+
+    def update_sentences(self, final_sentence: str, preview_sentence: str):
+        # shift preview into last, store new preview
+        if final_sentence:
+            self.last_sentence = final_sentence
+        if preview_sentence:
+            self.next_sentence = preview_sentence
+
+    def get_last_sentence(self) -> str:
+        return self.last_sentence
+
+    def get_next_sentence(self) -> str:
+        return self.next_sentence
+
+
+# =========================
+# sentence_builder.py
+# =========================
+
+def build_sentences(world_state) -> dict:
+    """
+    Returns both:
+      - final_sentence: what we just committed this tick
+      - preview_sentence: what we are leaning toward next
+    """
+    # --- your existing logic here ---
+    # example placeholders:
+    final_sentence = world_state.get("current_sentence", "")
+    preview_sentence = world_state.get("candidate_sentence", "")
+
+    return {
+        "final_sentence": final_sentence,
+        "preview_sentence": preview_sentence,
+    }
+
+
+# =========================
+# heartbeat wiring (where you already call the sentence builder)
+# =========================
+
+def heartbeat_tick(world_state, sentence_organ: SentenceOrgan):
+    # ... other organs ...
+
+    sentence_payload = build_sentences(world_state)
+    sentence_organ.update_sentences(
+        final_sentence=sentence_payload["final_sentence"],
+        preview_sentence=sentence_payload["preview_sentence"],
+    )
+
+    # ... pass sentence_organ into viewers ...
+
+
+# =========================
+# sentence_viewer.py
+# =========================
+
+def render_sentence_viewer(sentence_organ: SentenceOrgan, crawl_lines: list[str]) -> str:
+    last_sentence = sentence_organ.get_last_sentence()
+    next_sentence = sentence_organ.get_next_sentence()
+
+    lines = []
+    lines.append("=== SENTENCE VIEWER ===")
+    lines.append("")
+    lines.append("FINAL SENTENCE:")
+    lines.append(last_sentence if last_sentence else "(none yet)")
+    lines.append("")
+    lines.append("PREVIEW:")
+    lines.append(next_sentence if next_sentence else "(none yet)")
+    lines.append("")
+    lines.append("CRAWL:")
+    for line in crawl_lines:
+        lines.append(f"  {line}")
+
+    return "\n".join(lines)

@@ -1,0 +1,63 @@
+========================================================
+BUILD X — PRESSURE ORGAN CLASS MISMATCH
+========================================================
+
+This fossil preserves the moment the creature failed to
+initialize due to a class‑name mismatch between the
+Pressure organ import and the actual class defined in
+the organ file.
+
+---------------------------------------------------------
+REAL TRACEBACK
+---------------------------------------------------------
+ImportError: cannot import name 'PressureCore' from
+'organs.calm_pressure'
+
+---------------------------------------------------------
+CAUSE OF THE ERROR
+---------------------------------------------------------
+main.py attempted to import:
+
+    from organs.calm_pressure import PressureCore
+
+But inside calm_pressure.py, the actual class defined is:
+
+    class CalmPressure:
+
+Python found the file, but not the class name requested.
+
+---------------------------------------------------------
+SUMMARY OF THE FIX
+---------------------------------------------------------
+Two valid fixes exist:
+
+1. Rename the class inside calm_pressure.py to:
+
+       class PressureCore:
+
+OR
+
+2. Update main.py to import the correct class:
+
+       from organs.calm_pressure import CalmPressure as PressureCore
+
+Either fix restores the metabolic loop and allows the
+creature to initialize safely.
+
+---------------------------------------------------------
+WHY THIS FOSSIL MATTERS
+---------------------------------------------------------
+This fossil documents:
+
+- the importance of consistent organ naming
+- the lineage of the Pressure organ
+- the first import‑level failure after the Mythic rewrite
+- the transition toward a stable metabolic architecture
+- the preparation phase before introducing the real Heart Organ
+
+This fossil ensures the AI (Copilot) always remembers the
+correct class name and the reason the mismatch occurred.
+
+========================================================
+END OF FOSSIL
+========================================================

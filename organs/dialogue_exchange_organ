@@ -1,0 +1,40 @@
+# --- Dialogue Exchange Organ ---
+class DialogueExchangeOrgan:
+    def __init__(self):
+        self.exchanges = []  # list of events
+
+    def add_exchange(self, speaker, listener, word_type, payload=None):
+        event = {
+            "speaker": speaker,
+            "listener": listener,
+            "word_type": word_type,   # e.g. "speech", "worldbuild", "story"
+            "payload": payload        # the actual line or fragment
+        }
+        self.exchanges.append(event)
+
+    # --- Primary primitive action ---
+    def speak(self, speaker, listener, line):
+        self.add_exchange(speaker, listener, "speech", line)
+
+    # --- Scaffolding for future word types ---
+    def worldbuild(self, speaker, listener, concept):
+        self.add_exchange(speaker, listener, "worldbuild", concept)
+
+    def story(self, speaker, listener, fragment):
+        self.add_exchange(speaker, listener, "story", fragment)
+
+    def emotion(self, speaker, listener, emotion_word):
+        self.add_exchange(speaker, listener, "emotion", emotion_word)
+
+    def reaction(self, speaker, listener, reaction_word):
+        self.add_exchange(speaker, listener, "reaction", reaction_word)
+
+    def ritual(self, speaker, listener, ritual_word):
+        self.add_exchange(speaker, listener, "ritual", ritual_word)
+
+    def gremlin(self, speaker, listener, chaos_word):
+        self.add_exchange(speaker, listener, "gremlin", chaos_word)
+
+    # --- Retrieval ---
+    def get_recent(self, n=5):
+        return self.exchanges[-n:]

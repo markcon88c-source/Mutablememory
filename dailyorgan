@@ -1,0 +1,39 @@
+# daily.py — DailyOrgan for Rememger 2.0
+
+import os
+import datetime
+
+class DailyOrgan:
+    def __init__(self):
+        # Root of the critter system
+        self.root = "/data/data/com.termux/files/home/critter"
+
+        # Canonical daily logs directory
+        self.daily_dir = os.path.join(self.root, "organs", "daily_logs")
+        os.makedirs(self.daily_dir, exist_ok=True)
+
+    def today_path(self):
+        """Return the full path to today's daily log file."""
+        filename = datetime.date.today().isoformat() + ".txt"
+        return os.path.join(self.daily_dir, filename)
+
+    def open_today(self):
+        """
+        Ensure today's file exists and return its path.
+        Does not write anything unless needed.
+        """
+        path = self.today_path()
+
+        # Touch the file if it doesn't exist
+        if not os.path.isfile(path):
+            with open(path, "w") as f:
+                f.write("")  # create empty file
+
+        return path
+
+    def write(self, text):
+        """Append a line to today's daily file."""
+        path = self.open_today()
+        with open(path, "a") as f:
+            f.write(text + "\n")
+        return path

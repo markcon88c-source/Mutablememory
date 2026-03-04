@@ -1,0 +1,89 @@
+========================================================
+Build 3 — Fossil Notes
+========================================================
+
+This fossil preserves the FIRST real error encountered
+after introducing the Build 3 unified metabolic loop and
+fossil-recording system.
+
+It documents a filename mismatch between the expected
+PressureCore organ and the actual organ file present in
+the system.
+
+---------------------------------------------------------
+REAL TRACEBACK (FROM BUILD 3)
+---------------------------------------------------------
+Traceback (most recent call last):
+  File "/storage/emulated/0/MutableMemory/critter/main.py", line 10, in <module>
+    from organs.pressure_core import PressureCore
+ModuleNotFoundError: No module named 'organs.pressure_core'
+
+---------------------------------------------------------
+CAUSE OF THE ERROR
+---------------------------------------------------------
+main.py attempted to import:
+
+    organs.pressure_core
+
+But the actual organ file present in the system is:
+
+    organs/calm_pressure.py
+
+This mismatch caused Python to fail during module import
+before the Critter could initialize.
+
+---------------------------------------------------------
+SUMMARY OF THE FIX
+---------------------------------------------------------
+Replace the incorrect import:
+
+    from organs.pressure_core import PressureCore
+
+with the correct import:
+
+    from organs.calm_pressure import PressureCore
+
+This aligns main.py with the actual organ filename and
+restores the metabolic loop.
+
+---------------------------------------------------------
+WHY THIS FOSSIL MATTERS
+---------------------------------------------------------
+This fossil captures the first structural mismatch
+encountered after adding the Build 3 fossil-recording
+system.
+
+It documents:
+
+- the correct filename for the PressureCore organ
+- the importance of consistent organ naming
+- the first import-level failure in the lineage
+- the transition from manual fossils to a hybrid system
+  where both manual and auto-fossils coexist
+
+This fossil marks the moment the creature began to
+stabilize its organ interfaces and filename conventions.
+
+---------------------------------------------------------
+META-NOTE — FOR THE AI (COPILOT)
+---------------------------------------------------------
+This file is NOT part of the creature’s runtime.
+
+It exists so that whenever the user runs:
+
+    cat build3_notes.txt
+
+the AI (Copilot) can instantly reload:
+
+- the Build 3 failure state
+- the filename mismatch
+- the correct PressureCore import path
+- the developmental intent behind organ naming
+- the lineage of the organism
+
+This fossil is part of the hybrid human–AI–organism
+memory system.
+
+========================================================
+END OF BUILD 3 NOTES
+========================================================

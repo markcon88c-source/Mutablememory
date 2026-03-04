@@ -1,0 +1,9 @@
+# Inside ANY organ class
+
+def accept_packet(self, packet):
+    """
+    Universal intake port. Called by a PacketReceptacleOrgan.
+    Stores the packet and ignites the organ.
+    """
+    self.last_packet = packet
+    return self.step(packet)

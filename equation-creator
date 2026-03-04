@@ -1,0 +1,211 @@
+import random
+import math
+from dataclasses import dataclass, field
+from typing import List, Any, Dict, Optional
+import sympy as sp
+import time
+
+x = sp.Symbol("x")
+
+
+@dataclass
+class EquationProduct:
+    expression: sp.Expr
+    equation: sp.Eq
+    roots: List[complex]
+    vector_magnitude: float
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class EquationCreatorMachine:
+    name: str = "equation_creator_machine"
+    position: str = "center_math_window"
+    is_on: bool = False
+    non_interference: bool = True
+    max_nesting: int = 6
+    max_terms: int = 5
+    output_buffer: List[EquationProduct] = field(default_factory=list)
+    heartbeat_counter: int = 0
+
+    def dock(self, position: str = "center_math_window") -> None:
+        self.position = position
+
+    def move_to(self, position: str) -> None:
+        self.position = position
+
+    def turn_on(self) -> None:
+        self.is_on = True
+
+    def turn_off(self) -> None:
+        self.is_on = False
+
+    def run(self) -> None:
+        if not self.is_on:
+            return
+
+        self.heartbeat_counter += 1
+
+        expr = self._generate_random_expression(depth=0)
+        equation = sp.Eq(expr, 0)
+
+        roots = self._solve_equation(equation)
+        vector_magnitude = self._compute_vector_magnitude(roots)
+
+        product = EquationProduct(
+            expression=sp.simplify(expr),
+            equation=equation,
+            roots=roots,
+            vector_magnitude=vector_magnitude,
+            metadata={
+                "heartbeat": self.heartbeat_counter,
+                "nesting_used": self._estimate_nesting(expr),
+                "term_count": len(sp.Add.make_args(sp.expand(expr))),
+            },
+        )
+
+        self.output_buffer.append(product)
+
+        print("\n=== EQUATION CREATOR MACHINE OUTPUT ===")
+        print(f"Heartbeat: {self.heartbeat_counter}")
+        print(f"Expression: {product.expression}")
+        print(f"Equation:   {product.equation}")
+        print(f"Roots:      {product.roots}")
+        print(f"Vector Magnitude: {product.vector_magnitude}")
+        print(f"Nesting Depth: {product.metadata['nesting_used']}")
+        print(f"Term Count: {product.metadata['term_count']}")
+        print("=======================================\n")
+
+    def _generate_random_expression(self, depth: int) -> sp.Expr:
+        if depth >= self.max_nesting:
+            return self._generate_base_term()
+
+        choice = random.choice(
+            ["poly", "rational", "log", "exp", "root", "fraction", "mixed", "nested"]
+        )
+
+        if choice == "poly":
+            return self._generate_polynomial()
+        if choice == "rational":
+            return self._generate_rational()
+        if choice == "log":
+            return sp.log(self._generate_safe_inner(depth + 1))
+        if choice == "exp":
+            return sp.exp(self._generate_safe_inner(depth + 1))
+        if choice == "root":
+            return sp.sqrt(self._generate_safe_inner(depth + 1))
+        if choice == "fraction":
+            num = self._generate_safe_inner(depth + 1)
+            den = self._generate_safe_inner(depth + 1)
+            return num / den
+        if choice == "mixed":
+            return self._generate_mixed(depth + 1)
+        if choice == "nested":
+            return self._generate_random_expression(depth + 1)
+
+        return self._generate_base_term()
+
+    def _generate_base_term(self) -> sp.Expr:
+        coeff = self._random_coeff()
+        power = random.randint(0, 5)
+        if power == 0:
+            return coeff
+        return coeff * x**power
+
+    def _generate_polynomial(self) -> sp.Expr:
+        terms = []
+        term_count = random.randint(1, self.max_terms)
+        for _ in range(term_count):
+            terms.append(self._generate_base_term())
+        return sum(terms)
+
+    def _generate_rational(self) -> sp.Expr:
+        num = self._generate_polynomial()
+        den = self._generate_polynomial()
+        if den == 0:
+            den = self._generate_base_term() + 1
+        return num / den
+
+    def _generate_mixed(self, depth: int) -> sp.Expr:
+        parts: List[sp.Expr] = []
+        part_count = random.randint(2, self.max_terms)
+        for _ in range(part_count):
+            parts.append(self._generate_random_expression(depth))
+
+        expr: Optional[sp.Expr] = None
+        for part in parts:
+            if expr is None:
+                expr = part
+            else:
+                op = random.choice(["+", "-", "*", "/"])
+                if op == "+":
+                    expr = expr + part
+                elif op == "-":
+                    expr = expr - part
+                elif op == "*":
+                    expr = expr * part
+                elif op == "/":
+                    if part == 0:
+                        part = part + 1
+                    expr = expr / part
+        return expr
+
+    def _generate_safe_inner(self, depth: int) -> sp.Expr:
+        inner = self._generate_random_expression(depth)
+        if inner == 0:
+            inner = inner + self._random_coeff()
+        return inner
+
+    def _random_coeff(self) -> float:
+        base = random.uniform(-2.5, 2.5)
+        return float(f"{base:.9f}")
+
+    def _solve_equation(self, equation: sp.Eq) -> List[complex]:
+        try:
+            sol = sp.solve(equation, x)
+        except Exception:
+            return []
+
+        roots: List[complex] = []
+        for r in sol:
+            try:
+                roots.append(complex(r.evalf()))
+            except Exception:
+                continue
+        return roots
+
+    def _compute_vector_magnitude(self, roots: List[complex]) -> float:
+        if not roots:
+            return 0.0
+        real_parts = [r.real for r in roots]
+        imag_parts = [r.imag for r in roots]
+        sum_sq = sum(v * v for v in real_parts + imag_parts)
+        return float(math.sqrt(sum_sq))
+
+    def _estimate_nesting(self, expr: sp.Expr) -> int:
+        def depth(e: sp.Expr) -> int:
+            if not e.args:
+                return 1
+            return 1 + max(depth(a) for a in e.args)
+        return depth(expr)
+
+
+def start_equation_machine(machine: EquationCreatorMachine, cycles: int = 10, delay: float = 0.5):
+    machine.turn_on()
+    for _ in range(cycles):
+        machine.run()
+        time.sleep(delay)
+class shadow_cycle:
+    def __init__(self, heart, eq_creator):
+        self.heart = heart
+        self.eq_creator = eq_creator
+
+    def run(self):
+        pulse = self.heart.run()
+        if pulse is None:
+            return None
+        eq_output = self.eq_creator.run()
+        return {
+            "pulse": pulse,
+            "equation_output": eq_output
+        }

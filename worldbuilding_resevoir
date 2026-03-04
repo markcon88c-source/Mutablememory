@@ -1,0 +1,79 @@
+# worldbuilding_resevoir
+# Brush‑Up / Narrative Gravity Reservoir
+# (Expanded ×5 to create ~500 items)
+
+worldbuilding_reservoir = [
+    "dusk", "horizon", "grain", "ember", "hollow", "ridge", "tide", "whisper",
+    "echo", "stone", "wind", "shadow", "glimmer", "fog", "valley", "grove",
+    "meadow", "spire", "ruin", "chamber", "threshold", "pattern", "signal",
+    "drift", "spark", "thread", "memory", "shore", "depth", "current", "root",
+    "branch", "petal", "storm", "calm", "silt", "shard", "veil", "pulse",
+    "field", "corridor", "vault", "crest", "haze", "flare", "murmur", "trace",
+    "lumen", "tremor", "stillness", "echoing", "softlight", "coldwind",
+    "warmstone", "nightwater", "daybreak", "twilight", "dawn", "afterglow",
+    "underpath", "overlook", "quietplace", "deepwood", "skyfold", "riverbend",
+    "oldroad", "lostgate", "brightwind", "ashenfield", "mistline", "starfall",
+    "moonwake", "suncrest", "lowtide", "hightide", "softsand", "ironroot",
+    "glassshore", "stormpath", "emberline", "nightgrove", "duskplain",
+    "hollowrise", "windbreak", "stonewater", "shadowbend", "lightwell",
+    "deepchamber", "quietstep", "softcurrent", "oldpattern", "newhorizon",
+    "brightfield", "darkfield", "coldshore", "warmgrove",
+
+    # --- APPENDED WORLDBUILDING MASS ---
+    "Ashen Coast", "Hollow Meridian", "Skyglass Plateau", "Emberline Frontier",
+    "Deepwater Verge", "Whispering Barrens", "Frostroot Expanse", "Sunken Orchard",
+    "Nightwell Basin", "Ironwind Steppe", "Cloudspire Range", "Verdant Rift",
+    "Shatterplain", "Moonlit Archipelago", "Stormwake Peninsula", "Quietreach Valley",
+    "Dawnbreak Shelf", "Gloomfen", "Starwoven Dunes", "Riftwood Spiral",
+    "Lantern Marsh", "Pale Horizon", "Old Emberfields", "Tideworn Cliffs",
+    "Silvergrove Depths", "Broken Meridian", "Lumenfall Terrace", "Hollowgate Crossing",
+    "Thornwater Delta", "Skyfold Reaches",
+
+    "Aether Drift", "Memory Current", "Echo Pressure", "Lumen Flux",
+    "Shadow Binding", "Ember Resonance", "Tide Inversion", "Storm Memory",
+    "Quiet Force", "Pattern Gravity", "Rift Tension", "Dawn Surge",
+    "Nightfold Compression", "Root Pulse", "Veil Friction", "Horizon Shear",
+    "Deepwake Flow", "Starline Charge", "Grove Breath", "Chamber Echo",
+    "Silt Pressure", "Shard Harmonics", "Pulse Threading", "Drift Entanglement",
+
+    "Lumen Wardens", "Driftbound", "Hollow Choir", "Emberwright Guild",
+    "Tidecallers", "Quiet Assembly", "Shard Monastics", "Rootbound Circle",
+    "Skyfold Navigators", "Ironwind Covenant", "Nightwater Keepers", "Dawnweavers",
+    "Pattern Archivists", "Stormpath Legion", "Grove Sentinels", "Echo Cartographers",
+    "Veilwalkers", "Horizon Pact", "Deepchamber Council", "Starfall Custodians",
+
+    "Lumen Serpents", "Drift Hounds", "Hollowborn", "Ember Moths",
+    "Tidewalkers", "Stoneback Colossi", "Whisper Stags", "Nightgrove Shades",
+    "Skyfold Drakes", "Rootclaw Beasts", "Shardlings", "Echo Wraiths",
+    "Dawnstriders", "Frostpetal Foxes", "Stormbound Leviathans", "Veilspinners",
+    "Memory Eels", "Grove Giants", "Tidebound Sirens", "Rift Owls",
+
+    "Ember Key", "Hollow Lens", "Drift Compass", "Lumen Crown",
+    "Tideglass", "Rootforge Hammer", "Shard Mirror", "Quiet Bell",
+    "Stormscript Tablet", "Dawnthread Loom", "Nightwater Chalice", "Skyfold Prism",
+    "Echo Lantern", "Veilstone", "Pattern Codex", "Starwake Harp",
+    "Chamber Seal", "Frostroot Blade", "Groveheart Vessel", "Horizon Dial",
+
+    "First Shattering", "Quiet Bloom", "Emberfall", "Driftstorm",
+    "Hollow Eclipse", "Tide Reversal", "Nightwake Surge", "Dawn Collapse",
+    "Rootquake", "Shard Rain", "Veil Thinning", "Stormpath Convergence",
+    "Memory Flood", "Echo Spiral", "Frostroot Bloom", "Skyfold Break",
+    "Starfall Descent", "Grove Awakening", "Chamber Unsealing", "Horizon Split",
+
+    "dusk-heavy", "ember-warm", "hollow-quiet", "tide-slow",
+    "drift-soft", "storm-charged", "grove-still", "echo-thin",
+    "shadow-cool", "dawn-bright", "night-deep", "silt-muted",
+    "shard-sharp", "veil-softened", "pulse-steady", "field-wide",
+    "chamber-dense", "horizon-open", "root-anchored", "memory-faint"
+] * 5
+
+
+# ---------------------------------------------------------
+# PUNCTUATION FILTER — DO NOT COUNT AS WORDS
+# ---------------------------------------------------------
+PUNCT = {".", "!", "?", "&"}
+
+worldbuilding_reservoir = [
+    w for w in worldbuilding_reservoir
+    if w not in PUNCT
+]

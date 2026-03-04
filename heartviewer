@@ -1,0 +1,37 @@
+import os
+import time
+
+class HeartViewer:
+    def __init__(self, creature):
+        self.creature = creature
+
+    def show(self):
+        def clear():
+            os.system("clear")
+
+        while True:
+            clear()
+            p = self.creature.last_heart_packet
+            c = self.creature.last_character
+
+            if not p or not c:
+                print("\n💓 HEARTBEAT VIEWER")
+                print("No pulse yet… waiting for first name.")
+                time.sleep(0.5)
+                continue
+
+            print("\n💓 HEARTBEAT VIEWER — RAW PULSE")
+            print("══════════════════════════════════")
+            print(f"Full Name: {p['full_name']}")
+            print(f"First Phoneme: {p['phoneme']}")
+            print(f"Surname Phoneme: {p['surname_phoneme']}")
+            print(f"Cluster: {p['cluster']}")
+            print(f"Pulse: {p['pulse']:.3f}")
+            print(f"Tone: {p['tone']:.3f}")
+            print(f"Force: {p['force_type']} ({p['force_target']:.3f})")
+            print(f"Origin Block: {p['origin_block_id']}")
+            print(f"Parents: {p['parent_block_ids']}")
+            print("\nCharacter Object:", repr(c))
+            print("\n(press Ctrl+C to exit)")
+
+            time.sleep(0.7)

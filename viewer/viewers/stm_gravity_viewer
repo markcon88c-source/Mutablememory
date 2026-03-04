@@ -1,0 +1,107 @@
+ # viewers/stm_gravity_viewer.py
+
+class STMGravityViewer:
+    """
+    Placeholder-safe expressive viewer for narrative gravity.
+    Does NOT require the metabolic second iteration.
+    Pulls packet + STM metrics if available, otherwise uses defaults.
+    """
+
+    CHAMBERS = [
+        ("Whisper",       "·"),
+        ("Pull",          "↘"),
+        ("Weight",        "⬇"),
+        ("Bend",          "⤵"),
+        ("Orbit",         "⟳"),
+        ("Tension",       "⚡"),
+        ("Collapse",      "⬛"),
+        ("Event Horizon", "◎"),
+        ("Singularity",   "✦"),
+        ("Mythic Core",   "✸"),
+    ]
+
+    # Placeholder thresholds — tune later
+    THRESHOLDS = [0.05, 0.10, 0.18, 0.27, 0.39, 0.52, 0.68, 0.85, 1.05, 1.30]
+
+    def __init__(self, creature):
+        self.creature = creature
+
+    def safe_get(self, obj, key, default=0.0):
+        """Safely get nested values without crashing."""
+        if obj is None:
+            return default
+        return obj.get(key, default)
+
+    def render(self, packet=None):
+        print("\n" + "="*60)
+        print("🌀  STM NARRATIVE GRAVITY CHAMBER (Placeholder Mode)")
+        print("="*60)
+
+        # ---------------------------------------------------------
+        # SAFE EXTRACTION
+        # ---------------------------------------------------------
+        # Meaning mass (word pressure)
+        meaning_mass = 0.0
+        if packet:
+            pressures = packet.get("pressures", {})
+            meaning_mass = self.safe_get(pressures.get("word_strength", {}), "value", 0.0)
+
+        # Story density (STM)
+        stm = self.creature.stm.get_metrics()
+        story_density = stm.get("density", 0.0)
+
+        # Temporal pull (placeholder)
+        # Real version will use story_metrics.gravity_vector()
+        temporal_pull = 0.0
+
+        # Placeholder gravitational constant
+        G_n = 0.42
+
+        # ---------------------------------------------------------
+        # PLACEHOLDER NARRATIVE GRAVITY
+        # ---------------------------------------------------------
+        narrative_gravity = G_n * meaning_mass * story_density * (temporal_pull + 1e-6)
+
+        # ---------------------------------------------------------
+        # DETERMINE CHAMBER
+        # ---------------------------------------------------------
+        chamber_index = 0
+        for i, threshold in enumerate(self.THRESHOLDS):
+            if narrative_gravity >= threshold:
+                chamber_index = i
+
+        chamber_name, chamber_symbol = self.CHAMBERS[chamber_index]
+
+        # ---------------------------------------------------------
+        # PROGRESS BAR
+        # ---------------------------------------------------------
+        if chamber_index < len(self.THRESHOLDS) - 1:
+            next_threshold = self.THRESHOLDS[chamber_index + 1]
+            progress = min(1.0, narrative_gravity / next_threshold)
+        else:
+            progress = 1.0
+
+        bar_length = 20
+        filled = int(progress * bar_length)
+        bar = "█" * filled + "░" * (bar_length - filled)
+
+        # ---------------------------------------------------------
+        # RENDER OUTPUT
+        # ---------------------------------------------------------
+        print(f"\nMeaning Mass (placeholder): {meaning_mass:.3f}")
+        print(f"Story Density:              {story_density:.3f}")
+        print(f"Temporal Pull (placeholder): {temporal_pull:.3f}")
+        print(f"Gₙ (placeholder):           {G_n:.3f}")
+
+        print(f"\nComputed Narrative Gravity (placeholder): {narrative_gravity:.6f}")
+
+        print("\nChamber:", chamber_index + 1, f"— {chamber_name} {chamber_symbol}")
+        print(bar, f"{int(progress*100)}%")
+
+        print("\nNext Chamber Difficulty:")
+        if chamber_index < len(self.THRESHOLDS) - 1:
+            print(f"Requires: {next_threshold:.3f} gravity")
+        else:
+            print("You have reached the Mythic Core.")
+
+        print("="*60 + "\n")

@@ -1,0 +1,70 @@
+# organs/receiving_room_viewer.py
+
+import os
+import time
+
+
+def clear():
+    os.system("clear")
+
+
+class ReceivingRoomViewer:
+    """
+    Cinematic viewer for the Receiving Room Organ.
+    Shows the lineage of ascended characters as glowing lanterns
+    drifting through a quiet archive corridor.
+    """
+
+    def __init__(self, creature):
+        self.creature = creature
+
+    # -----------------------------------------------------
+    # CINEMATIC LINE PRINTER
+    # -----------------------------------------------------
+    def line(self, text="", delay=0.12):
+        print(text)
+        time.sleep(delay)
+
+    # -----------------------------------------------------
+    # FORCE GLYPH (visual signature)
+    # -----------------------------------------------------
+    def glyph(self, score):
+        """
+        Converts force score into a symbolic lantern glyph.
+        """
+        if score >= 28:
+            return "🔶"   # blazing lantern
+        elif score >= 26:
+            return "🟠"   # bright ember
+        elif score >= 24:
+            return "🟡"   # warm glow
+        else:
+            return "🟤"   # dim echo
+
+    # -----------------------------------------------------
+    # MAIN VIEWER
+    # -----------------------------------------------------
+    def show(self):
+        clear()
+
+        self.line("RECEIVING ROOM — THE QUIET ARCHIVE", 0.20)
+        self.line("============================================================", 0.15)
+        self.line("A corridor of drifting lanterns, each a memory of an ascended identity.\n", 0.20)
+
+        entries = self.creature.receiving_room.all()
+
+        if not entries:
+            self.line("(No ascended identities yet)", 0.15)
+            return
+
+        # Show last 20 entries, oldest → newest
+        for entry in entries[-20:]:
+            name = entry["name"]
+            score = entry["force_score"]
+            g = self.glyph(score)
+
+            # Lantern line
+            self.line(f"{g}  {name:<20}  [force {score:.2f}]", 0.10)
+
+        self.line("\n============================================================", 0.15)
+        self.line("End of archive.", 0.10)

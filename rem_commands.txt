@@ -1,0 +1,110 @@
+==================================================
+REMEMGER COMMANDS — QUICK REFERENCE
+==================================================
+
+This file lists every command the Rememger supports,
+grouped by category for fast lookup.
+
+--------------------------------------------------
+RUNNING THE CREATURE
+--------------------------------------------------
+
+Run the creature (detect INIT + HEARTBEAT_START):
+    python3 rememger.py run
+
+--------------------------------------------------
+SNAPSHOTS & BASELINE
+--------------------------------------------------
+
+Create a full snapshot (auto-triggered on run):
+    python3 rememger.py run
+
+Snapshot a single organ:
+    python3 rememger.py snapshot organ <name>
+
+Restore the latest baseline snapshot:
+    python3 rememger.py restore
+
+--------------------------------------------------
+NOTE EDITING (opens nano)
+--------------------------------------------------
+
+Edit daily notes:
+    python3 rememger.py edit daily
+
+Edit meta notes:
+    python3 rememger.py edit meta
+
+Edit copilot notes:
+    python3 rememger.py edit copilot
+
+Append to daily notes:
+    python3 rememger.py daily
+
+Append to meta notes:
+    python3 rememger.py meta
+
+Append to copilot notes:
+    python3 rememger.py copilot
+
+--------------------------------------------------
+ORGAN EDITING (opens nano)
+--------------------------------------------------
+
+Open an organ file:
+    python3 rememger.py organ <name>
+
+Examples:
+    python3 rememger.py organ heart
+    python3 rememger.py organ storm
+    python3 rememger.py organ baseline
+    python3 rememger.py organ archive
+    python3 rememger.py organ errors
+
+--------------------------------------------------
+UNIVERSAL CAT OUTPUT
+--------------------------------------------------
+
+Output an entire organ:
+    python3 rememger.py cat organ <name>
+
+Output part of an organ:
+    python3 rememger.py cat organ <name> <start> <end>
+
+Output daily notes:
+    python3 rememger.py cat daily
+
+Output meta notes:
+    python3 rememger.py cat meta
+
+Output copilot notes:
+    python3 rememger.py cat copilot
+
+Output any file:
+    python3 rememger.py cat file <filename>
+
+Output part of any file:
+    python3 rememger.py cat file <filename> <start> <end>
+
+--------------------------------------------------
+COMMON EXAMPLES
+--------------------------------------------------
+
+Open storm organ:
+    python3 rememger.py organ storm
+
+Snapshot storm organ:
+    python3 rememger.py snapshot organ storm
+
+Cat first 100 lines of storm organ:
+    python3 rememger.py cat organ storm 1 100
+
+Cat entire daily note:
+    python3 rememger.py cat daily
+
+Edit copilot notes:
+    python3 rememger.py edit copilot
+
+--------------------------------------------------
+END OF COMMANDS
+==================================================

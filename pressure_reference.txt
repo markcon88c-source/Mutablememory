@@ -1,0 +1,271 @@
+Now this should be in a document for future reference "----------------------------------------"
+cat organs/calm_pressure.py
+class AlertPressure:
+    def init(self):
+        self.value = 0.0
+        self.last_drift = 0.0
+
+    def compute(self, state):
+        drift = state.get("drift", 0.0)
+        storm = state["pressures"].get("storm", 0.0)
+        symbolic = state["pressures"].get("symbolic", 0.0)
+        concentration = state["pressures"].get("concentration", 0.0)
+        stm = state.get("STM", {})
+
+        # 1. Baseline vigilance (never fully calm)
+        baseline = 0.05
+
+        # 2. Drift spikes (instability)
+        driftspike = abs(drift - self.lastdrift) * 0.35
+        self.last_drift = drift
+
+        # 3. Storm increases alertness
+        storm_factor = storm * 0.25
+
+        # 4. Low concentration increases alertness
+        concentration_penalty = (1.0 - concentration) * 0.20
+
+        # 5. STM emptiness increases alertness (no anchors)
+        stm_empty = 0.0
+        if len(stm.get("L1", [])) == 0 and len(stm.get("L2", [])) == 0 and len(stm.get("L3", [])) == 0:
+            stm_empty = 0.15
+
+        # 6. Symbolic overload increases alertness
+        symbolic_factor = symbolic * 0.10
+
+        # Combine
+        increase = baseline + driftspike + stormfactor + concentrationpenalty + stmempty + symbolic_factor
+
+        # Decay (alert calms down slowly)
+        decrease = 0.04
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value----------------------------------------
+class ConcentrationPressure:
+    def init(self):
+        self.value = 0.0
+        self.last_drift = 0.0
+
+    def compute(self, state):
+        drift = state.get("drift", 0.0)
+        alert = state["pressures"].get("alert", 0.0)
+        symbolic = state["pressures"].get("symbolic", 0.0)
+        storm = state["pressures"].get("storm", 0.0)
+
+        # 1. Drift stability increases concentration
+        drift_stability = max(0.0, 1.0 - abs(drift)) * 0.25
+
+        # 2. Drift instability reduces concentration
+        driftinstability = abs(drift - self.lastdrift) * 0.30
+        self.last_drift = drift
+
+        # 3. Alert reduces concentration (fear breaks focus)
+        alert_penalty = alert * 0.40
+
+        # 4. Storm reduces concentration (chaos disrupts focus)
+        storm_penalty = storm * 0.20
+
+        # 5. Symbolic meaning slightly increases concentration
+        symbolic_factor = symbolic * 0.10
+
+        # Combine
+        increase = driftstability + symbolicfactor
+        decrease = driftinstability + alertpenalty + storm_penalty + 0.05  # decay
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value----------------------------------------
+class WordStrengthPressure:
+    def init(self):
+        self.value = 0.0
+        self.last_symbolic = 0.0
+
+    def compute(self, state):
+        symbolic = state["pressures"].get("symbolic", 0.0)
+        alert = state["pressures"].get("alert", 0.0)
+        concentration = state["pressures"].get("concentration", 0.0)
+        storm = state["pressures"].get("storm", 0.0)
+
+        # 1. Symbolic meaning increases word strength
+        symbolic_gain = symbolic * 0.35
+
+        # 2. Symbolic change (new meaning forming)
+        symbolicchange = abs(symbolic - self.lastsymbolic) * 0.25
+        self.last_symbolic = symbolic
+
+        # 3. Concentration sharpens word strength
+        concentration_factor = concentration * 0.20
+
+        # 4. Alert disrupts clarity
+        alert_penalty = alert * 0.30
+
+        # 5. Storm disrupts structure
+        storm_penalty = storm * 0.20
+
+        # Combine
+        increase = symbolicgain + symbolicchange + concentration_factor
+        decrease = alertpenalty + stormpenalty + 0.05  # decay
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value----------------------------------------
+class SymbolicPressure:
+    def init(self):
+        self.value = 0.0
+        self.laststmdepth = 0.0
+
+    def compute(self, state):
+        stm = state.get("STM", {})
+        drift = state.get("drift", 0.0)
+        alert = state["pressures"].get("alert", 0.0)
+        concentration = state["pressures"].get("concentration", 0.0)
+        storm = state["pressures"].get("storm", 0.0)
+
+        # 1. STM depth (meaning load)
+        stm_depth = (
+            len(stm.get("L1", [])) * 0.03 +
+            len(stm.get("L2", [])) * 0.05 +
+            len(stm.get("L3", [])) * 0.07
+        )
+
+        # 2. STM change (new meaning entering)
+        stmchange = abs(stmdepth - self.laststmdepth) * 0.25
+        self.laststmdepth = stm_depth
+
+        # 3. Drift contributes to symbolic meaning
+        drift_factor = max(0.0, 1.0 - abs(drift)) * 0.10
+
+        # 4. Concentration sharpens meaning
+        concentration_factor = concentration * 0.15
+
+        # 5. Alert suppresses meaning (fear disrupts coherence)
+        alert_penalty = alert * 0.20
+
+        # 6. Storm suppresses meaning (chaos disrupts structure)
+        storm_penalty = storm * 0.15
+
+        # Combine
+        increase = stmdepth + stmchange + driftfactor + concentrationfactor
+        decrease = alertpenalty + stormpenalty + 0.05  # decay
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value----------------------------------------
+class StormPressure:
+    def init(self):
+        self.value = 0.0
+        self.last_drift = 0.0
+
+    def compute(self, state):
+        drift = state.get("drift", 0.0)
+        alert = state["pressures"].get("alert", 0.0)
+        symbolic = state["pressures"].get("symbolic", 0.0)
+        concentration = state["pressures"].get("concentration", 0.0)
+
+        # 1. Drift instability creates storms
+        driftinstability = abs(drift - self.lastdrift) * 0.40
+        self.last_drift = drift
+
+        # 2. High alert fuels storms
+        alert_factor = alert * 0.30
+
+        # 3. Symbolic overload fuels storms
+        symbolic_factor = symbolic * 0.20
+
+        # 4. Low concentration increases storminess
+        concentration_penalty = (1.0 - concentration) * 0.15
+
+        # Combine
+        increase = driftinstability + alertfactor + symbolicfactor + concentrationpenalty
+
+        # Decay (storms calm down)
+        decrease = 0.06
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value----------------------------------------
+class CalmPressure:
+    def init(self):
+        self.value = 0.0
+        self.last_drift = 0.0
+
+    def compute(self, state):
+        symbolic = state["pressures"].get("symbolic", 0.0)
+        alert = state["pressures"].get("alert", 0.0)
+        storm = state["pressures"].get("storm", 0.0)
+        concentration = state["pressures"].get("concentration", 0.0)
+        drift = state.get("drift", 0.0)
+
+        # 1. Calm rises when storm is high
+        storm_factor = storm * 0.45
+
+        # 2. Calm rises when alert is high
+        alert_factor = alert * 0.35
+
+        # 3. Calm rises when symbolic overload is high
+        symbolic_factor = symbolic * 0.25
+
+        # 4. Calm rises when concentration is low
+        low_concentration = (1.0 - concentration) * 0.30
+
+        # 5. Calm rises when drift is unstable
+        driftinstability = abs(drift - self.lastdrift) * 0.20
+        self.last_drift = drift
+
+        increase = (
+            storm_factor
+            + alert_factor
+            + symbolic_factor
+            + low_concentration
+            + drift_instability
+        )
+
+        # Calm decays slowly
+        decrease = 0.04
+
+        self.value += increase
+        self.value -= decrease
+
+        # Clamp
+        if self.value < 0.0:
+            self.value = 0.0
+        if self.value > 1.0:
+            self.value = 1.0
+
+        return self.value.../MutableMemory/critter $

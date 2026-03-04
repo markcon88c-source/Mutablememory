@@ -1,0 +1,219 @@
+# viewer/metabolic_travel_viewer.py,
+
+from typing import List, Dict, Any
+import time
+
+
+class MetabolicTravelViewer:
+    """
+    METABOLIC TRAVEL VIEWER
+    -----------------------
+    Built from:
+      - Stability bar
+      - Alert Pressure Panel
+      - Sentence Preview
+      - Zone Routing logic
+
+    For now, this viewer is packet-agnostic:
+    it just shows what happened around a decision.
+    """
+
+    # ------------------------------------------------------------
+    # STABILITY BAR (20-unit color bar)
+    # ------------------------------------------------------------
+    def stability_bar(self, stability: float) -> str:
+        """
+        Produces a 20-unit bar where each unit is colored based on the zone.
+        """
+        units = int(stability * 20)
+        bar = ""
+
+        for i in range(20):
+            if i < units:
+                if stability < 0.29:
+                    bar += "🟥"
+                elif stability < 0.60:
+                    bar += "🔵"
+                elif stability < 0.65:
+                    bar += "🟡"
+                else:
+                    bar += "💚"
+            else:
+                bar += "⬜"
+
+        return bar
+
+    # ------------------------------------------------------------
+    # ALERT PRESSURE PANEL
+    # ------------------------------------------------------------
+    def render_alert_pressure_panel(self, alert_value: float, subs: Dict[str, float]) -> str:
+        """
+        Renders the full cinematic Alert Pressure Panel.
+        """
+
+        # Main bar
+        filled = int(alert_value * 20)
+        empty = 20 - filled
+        bar = "█" * filled + "░" * empty
+
+        # Zone Label
+        if alert_value >= 0.8:
+            zone = "🔴 REDLINE"
+        elif alert_value >= 0.5:
+            zone = "🟠 HIGH"
+        elif alert_value >= 0.25:
+            zone = "🟡 ELEVATED"
+        else:
+            zone = "🟢 CALM"
+
+        # Helper for sub-organ bars
+        def fmt(name, val):
+            blocks = int(val * 10)
+            return f"{name:<18} {val:0.2f}  " + ("█" * blocks) + ("░" * (10 - blocks))
+
+        # Build panel
+        lines = [
+            "🔴 ALERT PRESSURE PANEL",
+            "__________________________________________",
+            f"Alert: {alert_value:.2f}  {bar}",
+            f"Zone: {zone}",
+            "",
+            "Sub-Organs:",
+            fmt("Threat Geometry", subs.get("threat_geometry", 0.0)),
+            fmt("Shadow Memory", subs.get("shadow_memory", 0.0)),
+            fmt("Storm Resonance", subs.get("storm_resonance", 0.0)),
+            fmt("Cognitive Load", subs.get("cognitive_load", 0.0)),
+            fmt("Shadow Drift", subs.get("shadow_drift", 0.0)),
+            fmt("Heartbeat Sync", subs.get("heartbeat_sync", 0.0)),
+            fmt("Meaning Collapse", subs.get("meaning_collapse", 0.0)),
+            fmt("Chaos Gremlin", subs.get("chaos_gremlin", 0.0)),
+            fmt("Orientation Loss", subs.get("orientation_loss", 0.0)),
+            fmt("Emotional Volcano", subs.get("emotional_volcano", 0.0)),
+            "__________________________________________",
+        ]
+
+        return "\n".join(lines)
+
+    # ------------------------------------------------------------
+    # ZONE ROUTING SUMMARY
+    # ------------------------------------------------------------
+    def describe_zone_routing(
+        self,
+        zone: Dict[str, Any],
+        best_sentence: str,
+        best_meta: Dict[str, Any],
+        best_packets: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        """
+        Mirrors the zone routing logic, but only as a descriptive layer.
+        Does NOT actually route packets yet.
+        """
+
+        name = zone.get("name", "UNKNOWN")
+
+        print("\n📝 Sentence Preview")
+        print("__________________________________________")
+        print(best_sentence)
+        print("__________________________________________")
+
+        # RED - Reject
+        if name == "RED":
+            print("\n❌ REJECT - Structure unstable. Returning packets unchanged.")
+            decision = "REJECT"
+            result = (best_meta, best_packets)
+
+        # BLUE - Iterate locally
+        elif name == "BLUE":
+            print("\n🔵 BLUE ZONE - Local iteration required.")
+            time.sleep(0.2)  # small cosmetic delay
+            decision = "BLUE_ITERATE"
+            result = (best_meta, best_packets)
+
+        # GREEN - Accept
+        elif name == "GREEN":
+            print("\n✅ ACCEPT - Structure stable.")
+            decision = "GREEN_ACCEPT"
+            result = (best_meta, best_packets)
+
+        # EMERALD - Ascend to Iteration Viewer
+        elif name == "EMERALD":
+            print("\n💎 EMERALD - Ascend to Iteration Viewer.")
+            decision = "EMERALD_ASCEND"
+            # In the original, this calls self.emerald_ascend(best_packets)
+            result = {
+                "packets": best_packets,
+                "meta": best_meta,
+                "handoff": "iteration_viewer",
+            }
+
+        else:
+            print("\n⚪ UNKNOWN ZONE - Fallback to ocean.")
+            decision = "FALLBACK_OCEAN"
+            result = {
+                "packets": best_packets,
+                "meta": best_meta,
+                "handoff": "sentence_ocean",
+            }
+
+        return {
+            "zone_name": name,
+            "decision": decision,
+            "result": result,
+        }
+
+    # ------------------------------------------------------------
+    # FINAL DISPLAY ORGAN - viewer.show() WRAPPER
+    # ------------------------------------------------------------
+    def show(
+        self,
+        best_sentence: str,
+        zone: Dict[str, Any],
+        best_meta: Dict[str, Any],
+        best_packets: List[Dict[str, Any]],
+        alert_value: float = 0.0,
+        subs: Dict[str, float] = None,
+        stability: float = 0.0,
+    ):
+        """
+        High-level wrapper that shows:
+          - sentence preview
+          - zone routing decision
+          - stability bar
+          - alert pressure panel
+
+        Packets are passed through untouched for now.
+        """
+        if subs is None:
+            subs = {}
+
+        print("\n\n🧠 METABOLIC TRAVEL VIEWER")
+        print("==========================================")
+
+        # 1) Zone routing + sentence preview
+        routing_info = self.describe_zone_routing(
+            zone=zone,
+            best_sentence=best_sentence,
+            best_meta=best_meta,
+            best_packets=best_packets,
+        )
+
+        # 2) Stability bar
+        print("\n📊 Stability")
+        print("__________________________________________")
+        print(f"Stability: {stability:0.2f}")
+        print(self.stability_bar(stability))
+        print("__________________________________________")
+
+        # 3) Alert pressure panel
+        print()
+        print(self.render_alert_pressure_panel(alert_value, subs))
+
+        # 4) Summary of decision
+        print("\n📌 Routing Decision Summary")
+        print("__________________________________________")
+        print(f"Zone:      {routing_info['zone_name']}")
+        print(f"Decision:  {routing_info['decision']}")
+        print("__________________________________________")
+
+        # For now, we just return the original packets and meta unchanged.
+        return routing_info["result"]

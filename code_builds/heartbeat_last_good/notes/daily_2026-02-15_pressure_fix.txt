@@ -1,0 +1,25 @@
+========================================================
+DAILY NOTE — CalmPressure Import Alignment
+========================================================
+
+Today the creature failed to initialize due to a mismatch
+between the expected PressureCore class and the actual
+CalmPressure class defined in calm_pressure.py.
+
+This was not a structural failure — only a naming mismatch.
+
+Fix applied:
+
+- main.py updated to import CalmPressure as PressureCore
+  (or class renamed inside the file, depending on choice)
+
+This restores the metabolic loop and prepares the system
+for the upcoming Heart Organ integration.
+
+This note marks the moment the creature’s naming
+conventions stabilized and the architecture aligned
+around consistent organ identities.
+
+========================================================
+END OF DAILY NOTE
+========================================================

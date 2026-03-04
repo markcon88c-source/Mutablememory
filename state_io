@@ -1,0 +1,54 @@
+import json
+import os
+
+STATE_FILE = "state.json"
+CYCLE_FILE = "cycle.txt"
+MOOD_FILE = "mood.txt"
+
+def save_state_dict(state):
+    try:
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f, indent=2)
+    except Exception as e:
+        print("STATE SAVE ERROR:", e)
+
+def load_state_dict():
+    if not os.path.exists(STATE_FILE):
+        return {}
+    try:
+        with open(STATE_FILE, "r") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_cycle(cycle):
+    try:
+        with open(CYCLE_FILE, "w") as f:
+            f.write(str(cycle))
+    except Exception as e:
+        print("CYCLE SAVE ERROR:", e)
+
+def load_cycle():
+    if not os.path.exists(CYCLE_FILE):
+        return 0
+    try:
+        with open(CYCLE_FILE, "r") as f:
+            return int(f.read().strip())
+    except Exception:
+        return 0
+
+def save_mood(mood_index):
+    try:
+        with open(MOOD_FILE, "w") as f:
+            f.write(str(mood_index))
+    except Exception as e:
+        print("MOOD SAVE ERROR:", e)
+
+def load_mood():
+    if not os.path.exists(MOOD_FILE):
+        return 0
+    try:
+        with open(MOOD_FILE, "r") as f:
+            return int(f.read().strip())
+    except Exception:
+        return 0o

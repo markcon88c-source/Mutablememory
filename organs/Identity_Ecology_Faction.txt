@@ -1,0 +1,70 @@
+Flariahs        ember‑tribe        kindle          pyre             fiercely
+Alaruahs        dusk‑order         veil            sigil            quietly
+Vorthen         iron‑legion        march           standard         heavily
+Seraphel        light‑conclave     illuminate      spire            radiantly
+Draethen        shadow‑clan        stalk           relic            silently
+Kaelorian       storm‑host         surge           banner           violently
+Myrenfall       tide‑assembly      swell           crest            fluidly
+Thornweld       root‑circle        bind            grove            solemnly
+Elar Dominion   star‑covenant      ascend          pillar           steadily
+Syrathine       frost‑choir        still           mirror           coldly
+Varuun Pact     ember‑forge        temper          anvil            firmly
+Nethrali        dusk‑cabal         whisper         rune             softly
+Ostravian       wind‑march         sweep           pennant          swiftly
+Tiravel         moon‑council       reflect         orb              calmly
+Korvath         iron‑banner        strike          helm             harshly
+Selunari        dream‑sisterhood   weave           thread           delicately
+Ravennor        night‑assembly     gather          feather          quietly
+Aureliad        sun‑order          blaze           crown            brightly
+Thyrex          storm‑tribunal     judge           bolt             sharply
+Mirethos        ash‑circle         settle          ember            faintly
+Vorun Gate      oath‑wardens       guard           seal             solemnly
+Eryndel         river‑kin          flow            vessel           gently
+Sorevahn        dusk‑legion        descend         crest            slowly
+Talrien         sky‑accord         rise            wing             lightly
+Veylith         veil‑singers       echo            chime            distantly
+Drathmor        bone‑coven         carve           idol             grimly
+Kelrath         stone‑assembly     anchor          monolith         firmly
+Serelune        moon‑kin           drift           lantern          softly
+Vornic Order    iron‑keepers       forge           sigil            steadily
+Niraeth         frost‑tribe        chill           shard            coldly
+Aurevahn        light‑kin          reveal          glyph            gently
+Thalenic Host   wind‑forged        spiral          vane             swiftly
+Corvath         dusk‑born          watch           ridge            silently
+Faelorian       dream‑bound        wander          veil             faintly
+Rhyvandar       storm‑born         roar            crest            loudly
+Torvessa        ember‑sisterhood   warm            brazier          softly
+Mirelith        shadow‑choir       murmur          shroud           quietly
+Kael Dominion   iron‑covenant      command         bastion          heavily
+Syravell        tide‑keepers       pull            anchor           slowly
+Varethos        flame‑order        ignite          torch            sharply
+Elyndor         star‑assembly      align           sphere           calmly
+Thyrenfall      dusk‑tribunal      decree          seal             solemnly
+Seravahn        moon‑order         guide           arc              gently
+Vorathen        storm‑legion       crash           wave             violently
+Nirelith        frost‑council      preserve        crest            coldly
+Aurethine       light‑choir        harmonize       bell             warmly
+Kelvandar       stone‑host         uphold          pillar           firmly
+Ravessan        night‑kin          veil            feather          quietly
+Torvath         ember‑legion       smolder         brand            heavily
+Veyrath         wind‑circle        spiral          leaf             lightly
+Dravenfall      shadow‑order       descend         relic            silently
+Selunari Pact   moon‑singers       echo            orb              softly
+Varun Dominion  storm‑keepers      summon          bolt             fiercely
+Thornvale       root‑tribunal      entwine         branch           solemnly
+Elarian Host    star‑kin           shimmer         crest            faintly
+Syrath Dominion frost‑legion       harden          shard            coldly
+Corvel Order    dusk‑keepers       watch           lantern          dimly
+Fael Dominion   dream‑choir        hum             chord            distantly
+Nethros         ash‑born           settle          ember            quietly
+Vorun Circle    oath‑singers       vow             seal             solemnly
+Aurevoss        sun‑tribunal       blaze           crown            brightly
+Thyrel Dominion storm‑coven        bind            chain            harshly
+Mirel Dominion  shadow‑kin         drift           shroud           silently
+Kaelrath        iron‑tribe         hammer          anvil            heavily
+Serel Dominion  moon‑assembly      reflect         mirror           softly
+Vornic Choir    wind‑singers       rise            chime            lightly
+Eryndor         river‑order        flow            vessel           gently
+Torvessa Pact   ember‑kin          warm            brazier          softly
+Varunfall       storm‑born         crash           crest            violently
+Selunari Choir  moon‑kin           echo            bell             calmly

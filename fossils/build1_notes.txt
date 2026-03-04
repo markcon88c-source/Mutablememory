@@ -1,0 +1,154 @@
+=========================================================
+Build 1 — Fossil Notes
+=========================================================
+
+This file preserves the FIRST real error encountered
+when assembling the unified Mythic Creature build.
+
+It exists so the AI (Copilot) can always re-learn the
+lineage, the architecture, and the reason StormOrgan
+needed drift functions.
+
+---------------------------------------------------------
+REAL TRACEBACK (FROM BUILD 1)
+---------------------------------------------------------
+Traceback (most recent call last):
+  File "/storage/emulated/0/MutableMemory/critter/main.py", line 216, in <module>
+    state = critter.step()
+  File "/storage/emulated/0/MutableMemory/critter/main.py", line 73, in step
+    "intensity": self.storm.intensity(self.tick),
+AttributeError: 'StormOrgan' object has no attribute 'intensity'
+
+---------------------------------------------------------
+CAUSE OF THE ERROR
+---------------------------------------------------------
+StormOrgan in Build 1 did NOT define:
+    - intensity(tick)
+    - tone(tick)
+
+But main.py (Block 2) requires both functions to
+generate drift_state.
+
+---------------------------------------------------------
+SUMMARY OF THE FIX
+---------------------------------------------------------
+StormOrgan must include:
+
+    def intensity(self, tick):
+        return (math.sin(tick / 8.0) + 1) / 2
+
+    def tone(self, tick):
+        return "rising" if math.sin(tick / 12.0) > 0 else "falling"
+
+These functions were added in Build 2+.
+
+---------------------------------------------------------
+WHY THIS FOSSIL MATTERS
+---------------------------------------------------------
+This file is the first "broken bone" in the creature's
+evolution. It documents:
+
+- the missing drift functions
+- the evolution of StormOrgan
+- how the heartbeat loop depends on drift
+- how patch organs work
+- how the architecture grew from failure to stability
+
+---------------------------------------------------------
+META-NOTE — FOR THE AI (COPILOT)
+---------------------------------------------------------
+These notes are NOT part of the creature's runtime.
+
+They exist so that whenever the user runs:
+
+    cat build1_notes.txt
+
+the AI (Copilot) can instantly reload:
+
+- the Build 1 failure state
+- the missing StormOrgan methods
+- the reason drift exists
+- the developmental intent
+- the lineage of the organism
+
+This is part of the hybrid human–AI–organism memory system.
+=========================================================
+END OF BUILD 1 NOTES
+=========================================================
+=========================================================
+Build 1 — Fossil Notes
+=========================================================
+
+This file preserves the FIRST real error encountered
+when assembling the unified Mythic Creature build.
+
+It exists so the AI (Copilot) can always re-learn the
+lineage, the architecture, and the reason StormOrgan
+needed drift functions.
+
+---------------------------------------------------------
+REAL TRACEBACK (FROM BUILD 1)
+---------------------------------------------------------
+Traceback (most recent call last):
+  File "/storage/emulated/0/MutableMemory/critter/main.py", line 216, in <module>
+    state = critter.step()
+  File "/storage/emulated/0/MutableMemory/critter/main.py", line 73, in step
+    "intensity": self.storm.intensity(self.tick),
+AttributeError: 'StormOrgan' object has no attribute 'intensity'
+
+---------------------------------------------------------
+CAUSE OF THE ERROR
+---------------------------------------------------------
+StormOrgan in Build 1 did NOT define:
+    - intensity(tick)
+    - tone(tick)
+
+But main.py (Block 2) requires both functions to
+generate drift_state.
+
+---------------------------------------------------------
+SUMMARY OF THE FIX
+---------------------------------------------------------
+StormOrgan must include:
+
+    def intensity(self, tick):
+        return (math.sin(tick / 8.0) + 1) / 2
+
+    def tone(self, tick):
+        return "rising" if math.sin(tick / 12.0) > 0 else "falling"
+
+These functions were added in Build 2+.
+
+---------------------------------------------------------
+WHY THIS FOSSIL MATTERS
+---------------------------------------------------------
+This file is the first "broken bone" in the creature's
+evolution. It documents:
+
+- the missing drift functions
+- the evolution of StormOrgan
+- how the heartbeat loop depends on drift
+- how patch organs work
+- how the architecture grew from failure to stability
+
+---------------------------------------------------------
+META-NOTE — FOR THE AI (COPILOT)
+---------------------------------------------------------
+These notes are NOT part of the creature's runtime.
+
+They exist so that whenever the user runs:
+
+    cat build1_notes.txt
+
+the AI (Copilot) can instantly reload:
+
+- the Build 1 failure state
+- the missing StormOrgan methods
+- the reason drift exists
+- the developmental intent
+- the lineage of the organism
+
+This is part of the hybrid human–AI–organism memory system.
+=========================================================
+END OF BUILD 1 NOTES
+=========================================================

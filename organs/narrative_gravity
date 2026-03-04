@@ -1,0 +1,71 @@
+# organs/narrative_gravity_organ.py
+# ============================================================
+# NARRATIVE GRAVITY ORGAN — curvature from weak narrative forces (v1)
+# ============================================================
+
+from typing import List, Dict, Any
+
+
+class NarrativeGravityOrgan:
+    """
+    v1: Idea organ.
+
+    Job:
+      • read substrate particles
+      • sum weak narrative forces
+      • compute total attraction
+      • update substrate gravity field
+      • assign local gravity to each particle
+    """
+
+    def __init__(self, creature):
+        self.creature = creature
+
+        # coefficients (v1 heuristics)
+        self.coeff = {
+            "energy": 0.8,
+            "tension": 1.2,
+            "chaos": 0.6,
+            "wound": 1.5,
+            "symbolic": 1.0,
+            "temporal": 0.9,
+        }
+
+    # --------------------------------------------------------
+    # Public entrypoint
+    # --------------------------------------------------------
+    def compute_gravity(self, particles: List[Any]) -> float:
+        """
+        Compute total narrative gravity from all substrate particles.
+        Returns the global gravity scalar.
+        """
+
+        if not particles:
+            return 0.0
+
+        total = 0.0
+
+        for p in particles:
+            # weak forces
+            e = p.meaning_mass * self.coeff["energy"]
+            t = p.tension * self.coeff["tension"]
+            c = p.chaos_mobility * self.coeff["chaos"]
+            w = p.wound_gravity * self.coeff["wound"]
+            s = p.symbolic_suppression * self.coeff["symbolic"]
+            dt = p.emergence_pressure * self.coeff["temporal"]
+
+            # sum of weak attractions
+            attraction = e + t + c + w + s + dt
+
+            # particle-level gravity
+            p.narrative_gravity = attraction
+
+            total += attraction
+
+        # global narrative gravity
+        global_gravity = total / len(particles)
+
+        # update substrate field
+        self.creature.substrate_engine.field["gravity"] = global_gravity
+
+        return global_gravity

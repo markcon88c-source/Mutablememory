@@ -1,0 +1,8 @@
+verb_hooks = [
+    "reach toward",
+    "move within",
+    "shift beside",
+    "hold against",
+    "wander near",
+    "listen toward",
+]

@@ -1,0 +1,69 @@
+# ============================================================
+#  ECHO ORGAN v1
+#  - Measures resonance (echo force + memory)
+#  - Repeats or reinforces words based on echo score
+#  - Feeds into ChaosOrgan and IterationOrgan
+# ============================================================
+
+import random
+
+class EchoOrgan:
+
+    def __init__(self):
+        pass
+
+    # --------------------------------------------------------
+    # Compute echo score
+    # --------------------------------------------------------
+    def compute_echo(self, blocks, pressure, stability):
+        if not blocks:
+            return 0.0
+
+        # Total echo force from blocks
+        echo_force = sum(b.forces.echo for b in blocks)
+
+        # Memory resonance
+        memory_force = sum(b.forces.memory for b in blocks)
+
+        # Pressure amplifies echo
+        pressure_amp = pressure * 0.4
+
+        # Low stability increases echo leakage
+        instability_amp = max(0.0, 1.5 - stability) * 0.3
+
+        echo_score = echo_force + memory_force + pressure_amp + instability_amp
+
+        return echo_score
+
+    # --------------------------------------------------------
+    # Adjust sentence based on echo score
+    # --------------------------------------------------------
+    def adjust_sentence(self, words, blocks, echo_score):
+        adjusted = words[:]
+
+        # High echo → repeat ascended words
+        if echo_score > 3.0:
+            asc = [b.word for b in blocks if b.ascended]
+            if asc:
+                adjusted.append(random.choice(asc))
+
+        # Medium echo → repeat any stabilizing word
+        elif echo_score > 1.5:
+            mids = [b.word for b in blocks if not b.ascended]
+            if mids:
+                adjusted.append(random.choice(mids))
+
+        # Low echo → no repetition
+        return adjusted
+
+    # --------------------------------------------------------
+    # Main entry
+    # --------------------------------------------------------
+    def process(self, words, blocks, pressure, stability):
+        echo_score = self.compute_echo(blocks, pressure, stability)
+        adjusted_words = self.adjust_sentence(words, blocks, echo_score)
+
+        return {
+            "words": adjusted_words,
+            "echo": echo_score
+        }

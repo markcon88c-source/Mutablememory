@@ -1,0 +1,137 @@
+import random
+
+# ============================================================
+# SYLLABLE BANKS
+# ============================================================
+
+FIRST_SYLLABLES = [
+    # Vowels
+    "a", "e", "i", "o", "u",
+    # Open / soft
+    "la", "lo", "li", "lu", "ra", "ri", "ro", "ru",
+    "ha", "ho", "hu", "he",
+    # Mythic clusters
+    "ka", "ko", "ku", "ki", "ga", "go", "gu",
+    "ya", "yo", "yu", "wa", "wo", "wi",
+    "sha", "sho", "shu", "kha", "kho", "khu",
+    "xa", "xo", "xu", "zi", "zo", "zu",
+    "ta", "to", "tu", "ti", "da", "do", "du",
+    "qua", "quo", "qui", "kru", "dra", "dro", "dru"
+]
+
+SURNAME_SYLLABLES = [
+    "mar", "mor", "mir", "var", "vor", "vir",
+    "thal", "ther", "thur", "dral", "dren", "dros",
+    "kan", "kor", "kun", "zan", "zor", "zun",
+    "rak", "rok", "ruk", "vak", "vek", "vik",
+    "sha", "shek", "shor", "kha", "khor", "khun",
+    "ul", "ur", "orn", "ath", "eth", "oth"
+]
+
+
+# ============================================================
+# GENERATION HELPERS
+# ============================================================
+
+def generate_cluster():
+    length = random.randint(4, 7)
+    return "".join(random.choice(["U", "W", "A"]) for _ in range(length))
+
+
+def generate_first_phoneme():
+    count = random.randint(2, 4)
+    return "-".join(random.choice(FIRST_SYLLABLES) for _ in range(count))
+
+
+def generate_surname_phoneme():
+    count = random.randint(2, 3)
+    return "-".join(random.choice(SURNAME_SYLLABLES) for _ in range(count))
+
+
+def phoneme_to_name(phoneme: str) -> str:
+    return phoneme.replace("-", "").title()
+
+
+# ============================================================
+# CHARACTER OBJECT
+# ============================================================
+
+class Character:
+    def __init__(self, packet: dict):
+        self.first_name = packet["name"]
+        self.surname = packet["surname"]
+        self.full_name = packet["full_name"]
+
+        self.cluster = packet["cluster"]
+        self.phoneme = packet["phoneme"]
+        self.surname_phoneme = packet["surname_phoneme"]
+
+        self.pulse = packet["pulse"]
+        self.tone = packet["tone"]
+
+        self.force_type = packet["force_type"]
+        self.force_target = packet["force_target"]
+
+        self.origin_block_id = packet["origin_block_id"]
+        self.parent_block_ids = packet["parent_block_ids"]
+
+    def __repr__(self):
+        return f"<Character {self.full_name} ({self.cluster})>"
+
+
+# ============================================================
+# NAME GENERATOR HEART
+# ============================================================
+
+class NameHeart:
+    def __init__(self, creature, rate: int = 5):
+        """
+        rate = how many creature heartbeats per name pulse
+        """
+        self.creature = creature
+        self.rate = rate
+        self.counter = 0
+
+    def tick(self):
+        self.counter += 1
+        if self.counter % self.rate != 0:
+            return
+
+        # Cluster + phonemes
+        cluster = generate_cluster()
+        first_phoneme = generate_first_phoneme()
+        surname_phoneme = generate_surname_phoneme()
+
+        first_name = phoneme_to_name(first_phoneme)
+        surname = phoneme_to_name(surname_phoneme)
+
+        pulse = random.random()
+        tone = random.random()
+
+        packet = {
+            "name": first_name,
+            "surname": surname,
+            "full_name": f"{first_name} {surname}",
+
+            "letters": list(first_name),
+            "mode": "symbolic",
+
+            "cluster": cluster,
+            "phoneme": first_phoneme,
+            "surname_phoneme": surname_phoneme,
+
+            "pulse": pulse,
+            "tone": tone,
+
+            "origin_block_id": random.randint(1, 999),
+            "parent_block_ids": [random.randint(1, 999), random.randint(1, 999)],
+
+            "force_type": random.choice(["calm", "focus", "drift", "spark"]),
+            "force_target": random.uniform(0.3, 1.0),
+        }
+
+        # Store last heart packet for any viewer
+        self.creature.last_heart_packet = packet
+
+        # Send into character generator
+        self.creature.receive_heart_packet(packet)

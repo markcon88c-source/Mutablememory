@@ -1,0 +1,114 @@
+# organs/substrate_particle.py
+# ============================================================
+# SUBSTRATE PARTICLE — atomic narrative-force unit
+# ============================================================
+
+from typing import Dict, Any
+
+
+class SubstrateParticle:
+    """
+    A SubstrateParticle is a single packet + its narrative-force state.
+
+    It exposes:
+      • meaning mass (m)
+      • tension (tau)
+      • chaos mobility (chi)
+      • wound gravity (w)
+      • emergence pressure (E)
+      • narrative gravity (g)
+      • return potential (RP) for wounds
+    """
+
+    def __init__(self, drop: Dict[str, Any], substrate_field: Dict[str, float]):
+        """
+        drop: { "packet": {...}, "energy": float, "depth": int, ... }
+        substrate_field: global field from SubstrateEngine.get_field()
+        """
+        self.drop = drop
+        self.packet = drop.get("packet", {})
+        self.meta = self.packet.get("meta", {})
+        self.field = substrate_field
+
+        self._compute_core_scalars()
+
+    # --------------------------------------------------------
+    # Core scalar computation
+    # --------------------------------------------------------
+    def _compute_core_scalars(self) -> None:
+        # Base values from packet/meta
+        stability = self.meta.get("stability", 0.0)
+        drift = self.meta.get("drift_metrics", {}).get("value", 0.0)
+        weird = self.meta.get("weirdness", 0.0)
+        fracture = self.meta.get("fracture", 0.0)
+        chaos = self.packet.get("chaos", 0.0)
+        symbolic = self.packet.get("symbolic", 0.0)
+        energy = self.drop.get("energy", 0.5)
+        depth = self.drop.get("depth", 0)
+
+        eix = self.meta.get("EIX", {})
+        phi = eix.get("Phi", 0.0)
+        omega = eix.get("Omega", 0.0)
+
+        # Global field influences
+        archetype_pull = self.field.get("archetype_pull", 0.0)
+        symbolic_field = self.field.get("symbolic_charge", 0.0)
+
+        # Meaning mass
+        self.meaning_mass = stability + symbolic
+
+        # Tension
+        self.tension = abs(drift) + weird + fracture
+
+        # Chaos mobility
+        self.chaos_mobility = chaos
+
+        # Wound gravity
+        self.wound_gravity = 1.0 - energy
+
+        # Emergence pressure (EIX)
+        self.emergence_pressure = phi + omega
+
+        # Narrative gravity
+        self.narrative_gravity = self.meaning_mass + archetype_pull
+
+        # Depth + symbolic suppression
+        self.depth_penalty = float(depth)
+        self.symbolic_suppression = symbolic_field
+
+    # --------------------------------------------------------
+    # Wound return potential
+    # --------------------------------------------------------
+    def compute_return_potential(
+        self,
+        mobility_coeff: float = 0.45,
+        depth_coeff: float = 0.35,
+        symbolic_coeff: float = 0.5,
+    ) -> float:
+        """
+        Compute RP for this particle if it is in a wound context.
+        """
+        E = self.drop.get("energy", 0.5)
+
+        wound_pressure = (1.0 - E)
+        swim = self.chaos_mobility * mobility_coeff
+        D = self.depth_penalty * depth_coeff
+        S = self.symbolic_suppression * symbolic_coeff
+
+        RP = wound_pressure * self.tension + swim + self.emergence_pressure - D - S
+        return RP
+
+    # --------------------------------------------------------
+    # Export summary for viewers/organs
+    # --------------------------------------------------------
+    def summary(self) -> Dict[str, Any]:
+        return {
+            "meaning_mass": self.meaning_mass,
+            "tension": self.tension,
+            "chaos_mobility": self.chaos_mobility,
+            "wound_gravity": self.wound_gravity,
+            "emergence_pressure": self.emergence_pressure,
+            "narrative_gravity": self.narrative_gravity,
+            "depth_penalty": self.depth_penalty,
+            "symbolic_suppression": self.symbolic_suppression,
+        }

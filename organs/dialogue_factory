@@ -1,0 +1,17 @@
+# --- Dialogue Factory Organ ---
+class DialogueFactory:
+    def __init__(self, math_block, dialogue_force_organ):
+        self.math_block = math_block
+        self.dialogue_force_organ = dialogue_force_organ
+
+    def update(self, clarity, memory, echo, chaos, pressure):
+        # Compute using math block
+        df = self.math_block.compute_dialogue_force(
+            clarity,
+            memory,
+            echo,
+            chaos,
+            pressure
+        )
+        # Assign to organ
+        self.dialogue_force_organ.set(df)

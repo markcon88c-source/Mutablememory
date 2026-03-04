@@ -1,0 +1,84 @@
+# ============================================================
+#  STABILITY ORGAN v1
+#  - Measures stability after drift
+#  - Uses clarity, memory, pressure, inverse chaos, inverse drift
+#  - Reorders words to increase stability
+# ============================================================
+
+import math
+
+class StabilityOrgan:
+
+    def __init__(self):
+        pass
+
+    # --------------------------------------------------------
+    # Compute stability score
+    # --------------------------------------------------------
+    def compute_stability(self, blocks, drift):
+        if not blocks:
+            return 0.0
+
+        clarity = sum(b.forces.clarity for b in blocks)
+        memory  = sum(b.forces.memory  for b in blocks)
+        pressure= sum(b.forces.pressure for b in blocks)
+        chaos   = sum(b.forces.chaos   for b in blocks)
+
+        # Stability formula:
+        #   stability = (clarity + memory + pressure) - (chaos + drift)
+        stability = (clarity + memory + pressure) - (chaos + drift)
+
+        return stability
+
+    # --------------------------------------------------------
+    # Adjust sentence based on stability
+    # --------------------------------------------------------
+    def adjust_sentence(self, words, blocks, stability):
+        adjusted = words[:]
+
+        # High stability → reinforce clarity clusters
+        if stability > 3.0:
+            adjusted.sort(key=lambda w: self._clarity_of(w, blocks), reverse=True)
+
+        # Medium stability → pull stabilizers forward
+        elif stability > 1.0:
+            adjusted.sort(key=lambda w: self._memory_of(w, blocks), reverse=True)
+
+        # Low stability → push chaotic words to the end
+        else:
+            adjusted.sort(key=lambda w: self._chaos_of(w, blocks))
+
+        return adjusted
+
+    # --------------------------------------------------------
+    # Helpers to read block forces by word
+    # --------------------------------------------------------
+    def _clarity_of(self, word, blocks):
+        for b in blocks:
+            if b.word == word:
+                return b.forces.clarity
+        return 0.0
+
+    def _memory_of(self, word, blocks):
+        for b in blocks:
+            if b.word == word:
+                return b.forces.memory
+        return 0.0
+
+    def _chaos_of(self, word, blocks):
+        for b in blocks:
+            if b.word == word:
+                return b.forces.chaos
+        return 0.0
+
+    # --------------------------------------------------------
+    # Main entry
+    # --------------------------------------------------------
+    def process(self, words, blocks, drift):
+        stability = self.compute_stability(blocks, drift)
+        adjusted_words = self.adjust_sentence(words, blocks, stability)
+
+        return {
+            "words": adjusted_words,
+            "stability": stability
+        }

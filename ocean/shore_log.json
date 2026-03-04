@@ -1,0 +1,142 @@
+import json
+import os
+from datetime import datetime
+
+class ShoreOrgan:
+    """
+    Cathedral-era Shore Organ.
+    Responsibilities:
+      - read drifting drops from OceanOrgan
+      - compute 10-pressure return score
+      - log sentence + forces to JSON
+      - hand packet to MeaningOrgan for reinsertion
+    """
+
+    def __init__(self, creature):
+        self.creature = creature
+        self.log_dir = "ocean/shore"
+        os.makedirs(self.log_dir, exist_ok=True)
+
+    def _f(self, x, default=0.0):
+        try:
+            return float(x)
+        except:
+            return default
+
+    # ---------------------------------------------------------
+    # Compute 10-pressure return score
+    # ---------------------------------------------------------
+    def compute_score(self, state):
+        p = state.get("pressures", {}) or {}
+
+        calm = self._f(p.get("calm"))
+        storm = self._f(p.get("storm"))
+        symbolic = self._f(p.get("symbolic"))
+        concentration = self._f(p.get("concentration"))
+        alert = self._f(p.get("alert"))
+        stability = self._f(state.get("stability"))
+        drift = self._f(state.get("drift"))
+        narrative = self._f(p.get("narrative_momentum"))
+        coherence = self._f(p.get("coherence_binding"))
+        crystallization = self._f(p.get("conceptual_crystallization"))
+
+        score = (
+            calm * 0.12 +
+            symbolic * 0.12 +
+            concentration * 0.10 +
+            alert * 0.08 +
+            stability * 0.10 +
+            narrative * 0.10 +
+            coherence * 0.10 +
+            crystallization * 0.10 +
+            (1.0 - storm) * 0.10 +
+            (1.0 - abs(drift - 0.5) * 2.0) * 0.08
+        )
+
+        return max(0.0, min(1.0, score))
+
+    # ---------------------------------------------------------
+    # Write a JSON entry to the daily log
+    # ---------------------------------------------------------
+    def write_log(self, entry):
+        date = datetime.now().strftime("%Y-%m-%d")
+        path = os.path.join(self.log_dir, f"{date}.json")
+
+        # Load existing log
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                data = json.load(f)
+        else:
+            data = []
+
+        data.append(entry)
+
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
+
+    # ---------------------------------------------------------
+    # Main step: shoreline logic
+    # ---------------------------------------------------------
+    def step(self):
+        state = getattr(self.creature, "_last_state", {}) or {}
+        ocean = state.get("ocean", [])
+        if not ocean:
+            return None
+
+        # Take the most recent drop
+        drop = ocean[-1]
+        sentence = drop.get("sentence", "")
+
+        score = self.compute_score(state)
+
+        # Build log entry
+        log_entry = {
+            "sentence": sentence,
+            "forces": {
+                "depth": drop.get("depth"),
+                "drift": drop.get("drift"),
+                "strength": drop.get("strength"),
+                "symbolic": drop.get("symbolic"),
+            },
+            "pressures": state.get("pressures", {}),
+            "score": score,
+            "timestamp": datetime.now().isoformat(),
+        }
+
+        # Write to JSON
+        self.write_log(log_entry)
+
+        # Decide reinsertion path
+        meaning = self.creature.organs.get("meaning_organ")
+        brush = self.creature.organs.get("brush_up_viewer")
+
+        # High score → direct reinsertion
+        if score > 0.75:
+            pkt = {
+                "type": "meaning",
+                "payload": sentence,
+                "source": "shore_direct",
+                "score": score,
+            }
+            meaning.absorb(pkt)
+            return pkt
+
+        # Medium score → BrushUp first
+        if score > 0.40:
+            polished = brush.polish(sentence) if brush else sentence
+            pkt = {
+                "type": "meaning",
+                "payload": polished,
+                "source": "shore_brushup",
+                "score": score,
+            }
+            meaning.absorb(pkt)
+            return pkt
+
+        # Low score → dissolve into concept memory
+        concepts = state.get("concepts", [])
+        concepts.append(sentence)
+        state["concepts"] = concepts
+        self.creature._last_state = state
+
+        return None

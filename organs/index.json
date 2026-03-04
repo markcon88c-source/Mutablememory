@@ -1,0 +1,18 @@
+{
+    "ThoughtOrgan": "thought_organ.py",
+    "HeartOrgan": "heart_organ.py",
+    "WorldOrgan": "world_organ.py",
+    "CalmPressure": "calm_pressure.py",
+    "StmOrgan": "stm_organ.py",
+    "MoodOrgan": "mood_organ.py",
+    "SentenceOrgan": "sentence_organ.py",
+    "WordOrgan": "word_organ.py",
+    "Selector": "selector.py",
+    "Storm": "storm.py",
+    "MemoryOrgan": "memory_organ.py",
+    "LongtermMemory": "longterm_memory.py",
+    "ReactionOrgan": "reaction_organ.py",
+    "ControlRoomOrgan": "control_room_organ.py",
+    "RealWorldOrgan": "real_world_organ.py",
+    "WorldbuildingOrgan": "worldbuilding_organ.py"
+}

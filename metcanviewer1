@@ -1,0 +1,299 @@
+# viewer/sentence_metabolic_viewer.py
+
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
+
+import time
+import random
+from typing import List, Dict, Any, Optional
+
+from organs.sentence_builder import SentenceBuilder
+from viewer.SentenceViewer import SentenceViewer
+
+
+class SentenceMetabolicViewer:
+    """
+    FULL metabolic organ:
+    - Autonomous breathing cycles
+    - Reflection memory
+    - Weakest-attempt recall
+    - Emerald brush-up
+    - Iteration loops
+    - Emoji-rich expressive physiology
+    - Router-compatible (returns meta, packets)
+    - Does NOT call other viewers
+    """
+
+    def __init__(self, creature):
+        self.creature = creature
+        self.builder = SentenceBuilder(creature)
+        self.viewer = SentenceViewer()
+
+        self.attempt_history: List[Dict[str, Any]] = []
+        self.attempts_since_last_green: int = 0
+
+    # ------------------------------------------------------------
+    # ZONE CLASSIFICATION
+    # ------------------------------------------------------------
+    def classify_zone(self, stability: float) -> Dict[str, Any]:
+        if stability < 0.29:
+            return {"name": "RED", "emoji": "🔴", "description": "Reflection Zone"}
+        elif stability < 0.60:
+            return {"name": "BLUE", "emoji": "🔵", "description": "Iteration Zone"}
+        elif stability < 0.65:
+            return {"name": "GREEN", "emoji": "🟢", "description": "Stable Zone"}
+        else:
+            return {"name": "EMERALD", "emoji": "💚", "description": "Emerald Zone"}
+
+    def reflection_bias(self, stability: float) -> float:
+        if stability < 0.10:
+            return 0.90
+        elif stability < 0.20:
+            return 0.70
+        elif stability < 0.29:
+            return 0.55
+        return 0.0
+
+    # ------------------------------------------------------------
+    # ATTEMPT MEMORY
+    # ------------------------------------------------------------
+    def record_attempt(self, packets: List[Dict[str, Any]], stability: float):
+        self.attempt_history.append({"packets": packets, "stability": stability})
+
+        zone = self.classify_zone(stability)
+        if zone["name"] == "GREEN":
+            self.attempts_since_last_green = 0
+        else:
+            self.attempts_since_last_green += 1
+
+    def get_weakest_since_last_green(self) -> Optional[Dict[str, Any]]:
+        if self.attempts_since_last_green <= 0:
+            return None
+
+        window = self.attempt_history[-self.attempts_since_last_green:]
+        if not window:
+            return None
+
+        return min(window, key=lambda a: a.get("stability", 1.0))
+
+    # ------------------------------------------------------------
+    # CORE METABOLISM
+    # ------------------------------------------------------------
+    def run_metabolism_for_packets(self, packets: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+        # Packet arrival
+        packet_count = len(packets)
+        if packet_count == 0:
+            print("⚠️  No packets received by metabolism.")
+            return {
+                "structure_attempt": {
+                    "subject": None,
+                    "verb": None,
+                    "object": None,
+                    "modifier": None,
+                    "math_symbols": [],
+                },
+                "force_output": {
+                    "force_values": {"spark": 0, "drift": 0, "echo": 0},
+                    "final_weights": {"story": 0, "meaning": 0},
+                    "story_modifiers": {"mood": 0},
+                },
+                "score_output": {"score": 0, "classification": "failed"},
+                "growth_output": {"avg_l_level": 0, "total_pressure": 0},
+                "stability": 0,
+                "story_type": "none",
+                "destiny": "none",
+                "brushed_sentence": "",
+            }
+
+        print(f"📦  Metabolism received {packet_count} packets.")
+
+        # 1. Stability
+        stability_values = []
+        for p in packets:
+            mb = p.get("mathblock", {})
+            mb_force = mb.get("force", 0)
+            wp = p["forces"].get("word_pressure", 1)
+            stability_values.append(mb_force * wp)
+
+        stability = sum(stability_values) / max(len(stability_values), 1)
+
+        # 2. Structure
+        structure_attempt = {
+            "subject": packets[0]["word"],
+            "verb": packets[1]["word"] if len(packets) > 1 else "(none)",
+            "object": packets[-1]["word"],
+            "modifier": packets[2]["word"] if len(packets) > 2 else "(none)",
+            "math_symbols": [p.get("mathblock", {}).get("symbol") for p in packets],
+        }
+
+        # 3. Forces
+        force_output = {
+            "force_values": {
+                "spark": sum(p["forces"].get("spark", 0) for p in packets),
+                "drift": sum(p["forces"].get("drift", 0) for p in packets),
+                "echo": sum(p["forces"].get("echo", 0) for p in packets),
+            },
+            "final_weights": {
+                "story": stability * 0.5,
+                "meaning": stability * 0.5,
+            },
+            "story_modifiers": {
+                "mood": random.uniform(-0.1, 0.1),
+            },
+        }
+
+        # 4. Score
+        score_output = {
+            "score": stability,
+            "classification": (
+                "failed" if stability < 0.29 else
+                "weak" if stability < 0.60 else
+                "good" if stability < 0.65 else
+                "excellent"
+            ),
+        }
+
+        # 5. Growth
+        growth_output = {
+            "avg_l_level": sum(
+                p["forces"].get("l_level", 0) for p in packets
+            ) / max(len(packets), 1),
+            "total_pressure": sum(
+                p["forces"].get("word_pressure", 0) for p in packets
+            ),
+        }
+
+        # 6. Brushed sentence
+        brushed_sentence = " ".join(p["word"] for p in packets)
+
+        return {
+            "structure_attempt": structure_attempt,
+            "force_output": force_output,
+            "score_output": score_output,
+            "growth_output": growth_output,
+            "stability": stability,
+            "story_type": "metabolic",
+            "destiny": "flow",
+            "brushed_sentence": brushed_sentence,
+        }
+
+    # ------------------------------------------------------------
+    # PUBLIC ENTRYPOINT (router calls this)
+    # ------------------------------------------------------------
+    def run(self, packets: List[Dict[str, Any]]):
+        """
+        FULL metabolic cycle:
+        - runs metabolism
+        - breathes based on zone
+        - may generate new packets
+        - may recall weakest attempts
+        - may perform emerald brush-up
+        - returns (meta, packets)
+        """
+
+        meta = self.run_metabolism_for_packets(packets)
+        stability = meta["stability"]
+        zone = self.classify_zone(stability)
+
+        self.record_attempt(packets, stability)
+
+        print("\n" + "━" * 56)
+        print("🧠 SENTENCE METABOLISM VIEWER")
+        print("━" * 56)
+        print(f"Initial Stability: {stability:.2f} {zone['emoji']} {zone['description']}")
+        print(f"Zone: {zone['name']}")
+        print(f"Attempts since last GREEN: {self.attempts_since_last_green}")
+        print("━" * 56)
+
+        self.viewer.display(
+            meta["structure_attempt"],
+            meta["force_output"],
+            meta["score_output"],
+            meta["growth_output"],
+        )
+
+        # tiny breath so it doesn’t run at 300 mph
+        time.sleep(0.15)
+
+        # --------------------------------------------------------
+        # BREATHING CYCLES
+        # --------------------------------------------------------
+
+        # RED — Reflection Zone
+        if zone["name"] == "RED":
+            print("🔴 Reflection Zone Logic")
+            p_memory = self.reflection_bias(stability)
+            weakest = self.get_weakest_since_last_green()
+
+            use_memory = weakest is not None and (random.random() < p_memory)
+            if use_memory:
+                print("  Using weakest recent attempt.")
+                packets = weakest["packets"]
+            else:
+                print("  Generating new attempt.")
+                packets = self.builder.generate_sentence()
+
+            print("━" * 56)
+            meta = self.run_single_attempt(packets)
+
+        # BLUE — Iteration Zone
+        elif zone["name"] == "BLUE":
+            print("🔵 Iteration Zone: 4-iteration breathing.")
+            for i in range(4):
+                print(f"  Iteration {i + 1}/4")
+                packets = self.builder.generate_sentence()
+                meta = self.run_single_attempt(packets)
+
+        # GREEN — Stable Zone
+        elif zone["name"] == "GREEN":
+            print("🟢 Stable Zone: 4-iteration breathing.")
+            for i in range(4):
+                print(f"  Iteration {i + 1}/4")
+                packets = self.builder.generate_sentence()
+                meta = self.run_single_attempt(packets)
+
+        # EMERALD — Brush-Up Zone
+        else:
+            print("💚 Emerald Zone: 4-iteration breathing + brush-up.")
+            for i in range(4):
+                print(f"  Iteration {i + 1}/4")
+                packets = self.builder.generate_sentence()
+                meta = self.run_single_attempt(packets)
+
+            brushed = meta.get("brushed_sentence", None)
+            if brushed:
+                print("\n✨ Brush-Up (Emerald)")
+                print(f"  {brushed}")
+                print("\n" + "━" * 56 + "\n")
+
+        return meta, packets
+
+    # ------------------------------------------------------------
+    # INTERNAL ATTEMPT RUNNER
+    # ------------------------------------------------------------
+    def run_single_attempt(self, packets: List[Dict[str, Any]]):
+        meta = self.run_metabolism_for_packets(packets)
+        stability = meta["stability"]
+        zone = self.classify_zone(stability)
+
+        self.record_attempt(packets, stability)
+
+        print("\n" + "━" * 56)
+        print("🧠 SENTENCE METABOLISM VIEWER")
+        print("━" * 56)
+        print(f"Initial Stability: {stability:.2f} {zone['emoji']} {zone['description']}")
+        print(f"Zone: {zone['name']}")
+        print(f"Attempts since last GREEN: {self.attempts_since_last_green}")
+        print("━" * 56)
+
+        self.viewer.display(
+            meta["structure_attempt"],
+            meta["force_output"],
+            meta["score_output"],
+            meta["growth_output"],
+        )
+
+        time.sleep(0.15)
+
+        return meta

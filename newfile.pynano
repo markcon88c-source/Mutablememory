@@ -1,0 +1,6 @@
+def run_cycle():
+    """
+    One creature cycle.
+    Returns a simple state dictionary.
+    """
+    return {"state": "ok"}-

@@ -1,0 +1,107 @@
+=== SYNERGY COMMAND SET — 2026-02-16 ===
+Tag: [SYNERGY-COMMAND-SET-0216]
+
+Purpose:
+Create a unified set of memo commands that allow all five existing organs 
+(ThoughtOrgan, STMOrgan, CalmPressure, HeartOrgan, WorldOrgan) to be inspected 
+through the existing viewer without rewriting the viewer.
+
+Commands Created:
+
+1. ThoughtOrgan
+   memo thought
+   memo math ThoughtOrgan
+
+2. STMOrgan
+   memo stm
+
+3. CalmPressure
+   memo calm
+
+4. HeartOrgan
+   memo heart
+
+5. WorldOrgan
+   memo world
+
+Notes:
+- All commands route organ.step() output directly into the existing viewer.
+- No viewer rewrite required.
+- Math block integration will attach to ThoughtOrgan and display via:
+      memo math ThoughtOrgan
+- Commands are stable and ready for Rememger routing.
+
+End of entry.# Daily Notes — 2026-02-16
+# Daily Notes — 2026-02-16 (Technical Integrity Scan)
+
+## Purpose
+Preliminary scan for:
+- dict/float violations
+- callback inconsistencies (CalmPressure-style)
+- contradictions between organs
+- blockers for ThoughtOrgan → MathBlockViewer integration
+
+## Findings
+
+### 1. Dict/Float Violations
+- No direct violations detected yet, but ThoughtOrgan’s output format is not guaranteed to be a pure dict or pure float. 
+- MathBlockViewer expects a stable math_block structure; ThoughtOrgan currently emits mixed packets depending on step() behavior.
+- Recommendation: enforce a canonical math_block dict with float fields inside ThoughtOrgan before routing to viewer.
+
+### 2. Callback Inconsistencies (CalmPressure Pattern)
+- CalmPressure uses a callback-style pressure update that other organs do not follow.
+- STMOrgan and HeartOrgan do not expose callback hooks; this may cause inconsistent packet flow.
+- Recommendation: standardize a `post_step(packet)` callback across all organs.
+
+### 3. Organ Contradictions
+- No explicit contradictions detected, but:
+  - HeartOrgan emits emotional polarity fields.
+  - CalmPressure emits pressure deltas.
+  - ThoughtOrgan emits semantic clusters.
+  - WorldOrgan emits environmental context.
+- These packets do not share a unified schema.
+- Recommendation: define a shared “organ_packet” schema before integration.
+
+### 4. Thought → MathBlockViewer Integration Blockers
+- MathBlockViewer requires:
+  - `float_core`
+  - `dict_packet`
+  - `metadata`
+  - `resonance`
+  - `pressure`
+- ThoughtOrgan does not yet emit these fields consistently.
+- Recommendation: extend ThoughtOrgan.step() to emit a full math_block structure.
+
+## Summary
+System is stable. No fatal contradictions. Integration requires schema alignment, not rewrites.
+
+# MEMO COMMAND SET — MASTER LIST
+
+## Organ Inspection Commands
+memo thought          → run ThoughtOrgan.step() and show output
+memo stm              → run STMOrgan.step()
+memo calm             → run CalmPressure.step()
+memo heart            → run HeartOrgan.step()
+memo world            → run WorldOrgan.step()
+
+## Math Block Viewer Commands
+memo math <organ>     → show math block for the given organ
+memo mb <organ>       → alias for math block viewer
+
+## Code Inspection Commands
+memo code <organ>     → print organ source code
+memo code viewer      → print MathBlockViewer code
+memo code rememger    → print rememger.py
+memo code all         → print all organ code in sequence
+
+## Memory / Notes Commands
+memo today            → open today’s daily note
+memo note <subject>   → create a subject-tagged note
+memo recall <subject> → list notes by subject
+memo recall all       → list all notes
+
+## Snapshot / Restore Commands
+memo snapshot         → create a snapshot
+memo restore <name>   → restore a snapshot
+memo history restore  → show restore_index.json lineage
+memo history notes    → show notes_index.json metadata

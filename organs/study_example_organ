@@ -1,0 +1,377 @@
+# organs/study_example_organ.py
+
+import math
+
+
+class StudyExampleOrgan:
+    """
+    Study Example Organ
+
+    - Holds example "packs" per story type.
+    - Each example has: sentence, structure, forces (MathBlock-style).
+    - Can be expanded forever by appending more examples to each pack.
+    - Provides:
+        - pressure_scores(forces): soft similarity per story type.
+        - color_if_example(sentence): ANSI-color if sentence is a study example.
+    """
+
+    def __init__(self):
+        # -----------------------------------------------------
+        # EXAMPLE PACKS (you can freely add more over time)
+        # -----------------------------------------------------
+        # Forces are rough, hand-shaped MathBlock-style values.
+        # They do NOT need to be perfect; they just give the critter
+        # a force field to feel against.
+        self.packs = {
+            "mythic": [
+                {
+                    "sentence": "The moon remembers the first fire.",
+                    "structure": {
+                        "subject": "moon",
+                        "verb": "remembers",
+                        "object": "the first fire",
+                        "modifier": "",
+                    },
+                    "forces": {
+                        "spark": 0.7,
+                        "drift": 0.3,
+                        "echo": 0.8,
+                        "chaos": 0.1,
+                        "clarity": 0.8,
+                        "memory": 0.7,
+                        "pressure": 0.21,
+                    },
+                },
+                {
+                    "sentence": "A wanderer follows the silver path eternally.",
+                    "structure": {
+                        "subject": "wanderer",
+                        "verb": "follows",
+                        "object": "the silver path",
+                        "modifier": "eternally",
+                    },
+                    "forces": {
+                        "spark": 0.6,
+                        "drift": 0.4,
+                        "echo": 0.7,
+                        "chaos": 0.1,
+                        "clarity": 0.8,
+                        "memory": 0.6,
+                        "pressure": 0.24,
+                    },
+                },
+                {
+                    "sentence": "The river carries forgotten names.",
+                    "structure": {
+                        "subject": "river",
+                        "verb": "carries",
+                        "object": "forgotten names",
+                        "modifier": "",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.3,
+                        "echo": 0.8,
+                        "chaos": 0.1,
+                        "clarity": 0.8,
+                        "memory": 0.7,
+                        "pressure": 0.15,
+                    },
+                },
+            ],
+            "horror": [
+                {
+                    "sentence": "The door breathed softly in the dark.",
+                    "structure": {
+                        "subject": "door",
+                        "verb": "breathed",
+                        "object": "",
+                        "modifier": "softly in the dark",
+                    },
+                    "forces": {
+                        "spark": 0.4,
+                        "drift": 0.5,
+                        "echo": 0.6,
+                        "chaos": 0.4,
+                        "clarity": 0.4,
+                        "memory": 0.6,
+                        "pressure": 0.20,
+                    },
+                },
+                {
+                    "sentence": "The shadow remembered your name.",
+                    "structure": {
+                        "subject": "shadow",
+                        "verb": "remembered",
+                        "object": "your name",
+                        "modifier": "",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.4,
+                        "echo": 0.7,
+                        "chaos": 0.3,
+                        "clarity": 0.5,
+                        "memory": 0.7,
+                        "pressure": 0.20,
+                    },
+                },
+                {
+                    "sentence": "The floorboards whispered when no one moved.",
+                    "structure": {
+                        "subject": "floorboards",
+                        "verb": "whispered",
+                        "object": "",
+                        "modifier": "when no one moved",
+                    },
+                    "forces": {
+                        "spark": 0.4,
+                        "drift": 0.5,
+                        "echo": 0.6,
+                        "chaos": 0.4,
+                        "clarity": 0.4,
+                        "memory": 0.6,
+                        "pressure": 0.20,
+                    },
+                },
+            ],
+            "comedy": [
+                {
+                    "sentence": "The gremlin tripped over its own shadow awkwardly.",
+                    "structure": {
+                        "subject": "gremlin",
+                        "verb": "tripped",
+                        "object": "over its own shadow",
+                        "modifier": "awkwardly",
+                    },
+                    "forces": {
+                        "spark": 0.6,
+                        "drift": 0.5,
+                        "echo": 0.5,
+                        "chaos": 0.5,
+                        "clarity": 0.5,
+                        "memory": 0.4,
+                        "pressure": 0.30,
+                    },
+                },
+                {
+                    "sentence": "The moon tried to rise but got stuck behind a cloud.",
+                    "structure": {
+                        "subject": "moon",
+                        "verb": "tried",
+                        "object": "to rise",
+                        "modifier": "but got stuck behind a cloud",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.6,
+                        "echo": 0.5,
+                        "chaos": 0.5,
+                        "clarity": 0.5,
+                        "memory": 0.4,
+                        "pressure": 0.30,
+                    },
+                },
+                {
+                    "sentence": "The broom refused to sweep unless bribed.",
+                    "structure": {
+                        "subject": "broom",
+                        "verb": "refused",
+                        "object": "to sweep",
+                        "modifier": "unless bribed",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.5,
+                        "echo": 0.5,
+                        "chaos": 0.5,
+                        "clarity": 0.5,
+                        "memory": 0.4,
+                        "pressure": 0.25,
+                    },
+                },
+            ],
+            "dream": [
+                {
+                    "sentence": "The staircase forgot which way was up.",
+                    "structure": {
+                        "subject": "staircase",
+                        "verb": "forgot",
+                        "object": "which way was up",
+                        "modifier": "",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.4,
+                        "echo": 0.6,
+                        "chaos": 0.4,
+                        "clarity": 0.5,
+                        "memory": 0.6,
+                        "pressure": 0.20,
+                    },
+                },
+                {
+                    "sentence": "The river flowed softly through the ceiling.",
+                    "structure": {
+                        "subject": "river",
+                        "verb": "flowed",
+                        "object": "",
+                        "modifier": "softly through the ceiling",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.4,
+                        "echo": 0.6,
+                        "chaos": 0.4,
+                        "clarity": 0.5,
+                        "memory": 0.6,
+                        "pressure": 0.20,
+                    },
+                },
+            ],
+            "drama": [
+                {
+                    "sentence": "The promise cracked under the weight of silence.",
+                    "structure": {
+                        "subject": "promise",
+                        "verb": "cracked",
+                        "object": "",
+                        "modifier": "under the weight of silence",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.5,
+                        "echo": 0.7,
+                        "chaos": 0.3,
+                        "clarity": 0.6,
+                        "memory": 0.7,
+                        "pressure": 0.25,
+                    },
+                },
+                {
+                    "sentence": "The room held its breath and refused to exhale.",
+                    "structure": {
+                        "subject": "room",
+                        "verb": "held",
+                        "object": "its breath",
+                        "modifier": "and refused to exhale",
+                    },
+                    "forces": {
+                        "spark": 0.5,
+                        "drift": 0.5,
+                        "echo": 0.7,
+                        "chaos": 0.3,
+                        "clarity": 0.6,
+                        "memory": 0.7,
+                        "pressure": 0.25,
+                    },
+                },
+            ],
+            "chaos": [
+                {
+                    "sentence": "The clocks argued about what time it wasn’t.",
+                    "structure": {
+                        "subject": "clocks",
+                        "verb": "argued",
+                        "object": "about what time it wasn’t",
+                        "modifier": "",
+                    },
+                    "forces": {
+                        "spark": 0.6,
+                        "drift": 0.7,
+                        "echo": 0.5,
+                        "chaos": 0.8,
+                        "clarity": 0.2,
+                        "memory": 0.4,
+                        "pressure": 0.42,
+                    },
+                },
+                {
+                    "sentence": "The map kept redrawing itself while no one watched.",
+                    "structure": {
+                        "subject": "map",
+                        "verb": "kept redrawing",
+                        "object": "itself",
+                        "modifier": "while no one watched",
+                    },
+                    "forces": {
+                        "spark": 0.6,
+                        "drift": 0.7,
+                        "echo": 0.5,
+                        "chaos": 0.8,
+                        "clarity": 0.2,
+                        "memory": 0.4,
+                        "pressure": 0.42,
+                    },
+                },
+            ],
+        }
+
+        # Build a quick lookup index for coloring
+        self._sentence_index = {}
+        for story_type, examples in self.packs.items():
+            for ex in examples:
+                s = ex["sentence"]
+                self._sentence_index[s] = story_type
+
+    # ---------------------------------------------------------
+    # FORCE SIMILARITY
+    # ---------------------------------------------------------
+    def _force_similarity(self, f1, f2):
+        """
+        Simple similarity: 1 - normalized L1 distance over shared keys.
+        Returns value in [0, 1], higher = more similar.
+        """
+        keys = set(f1.keys()) & set(f2.keys())
+        if not keys:
+            return 0.0
+
+        total = 0.0
+        for k in keys:
+            total += abs(f1[k] - f2[k])
+
+        avg = total / len(keys)
+        # Max possible distance per key is 1.0, so normalize
+        sim = 1.0 - avg
+        return max(0.0, min(1.0, sim))
+
+    def pressure_scores(self, forces):
+        """
+        Given a forces dict from the critter's own structure,
+        return a soft similarity score per story type based on
+        the example packs' forces.
+        """
+        scores = {}
+        for story_type, examples in self.packs.items():
+            if not examples:
+                scores[story_type] = 0.0
+                continue
+
+            sims = []
+            for ex in examples:
+                ex_forces = ex.get("forces", {})
+                sims.append(self._force_similarity(forces, ex_forces))
+
+            scores[story_type] = sum(sims) / len(sims)
+
+        return scores
+
+    # ---------------------------------------------------------
+    # COLORING SUPPORT
+    # ---------------------------------------------------------
+    def is_example_sentence(self, sentence):
+        """
+        Returns True if the sentence exactly matches a study example.
+        """
+        return sentence in self._sentence_index
+
+    def color_if_example(self, sentence):
+        """
+        If the sentence is one of the study examples, wrap it in
+        ANSI color codes so it stands out in the viewer.
+        Otherwise, return it unchanged.
+        """
+        if self.is_example_sentence(sentence):
+            # Soft magenta highlight
+            return "\033[95m" + sentence + "\033[0m"
+        return sentence

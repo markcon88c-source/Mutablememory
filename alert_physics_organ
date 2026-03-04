@@ -1,0 +1,227 @@
+# organs/alert_physics_organ.py
+# ============================================================
+# 🌋 ALERT PHYSICS ORGAN
+# ============================================================
+# Uses the 6+ core physics forces (spark, drift, echo, chaos,
+# storm, gravity, etc.) plus stability + packet/meta signals
+# to derive the 10 alert sub‑pressures:
+#
+#  - threat_geometry
+#  - shadow_memory
+#  - storm_resonance
+#  - cognitive_load
+#  - shadow_drift
+#  - heartbeat_sync
+#  - meaning_collapse
+#  - chaos_gremlin
+#  - orientation_loss
+#  - emotional_volcano
+#
+# Returns:
+#   {
+#       "total": float,
+#       "sub_organs": { name: float in [0,1], ... }
+#   }
+# ============================================================
+
+from typing import Dict, Any
+
+
+def _clamp(x: float, lo: float = 0.0, hi: float = 1.0) -> float:
+    if x < lo:
+        return lo
+    if x > hi:
+        return hi
+    return x
+
+
+def _safe(x: Any, default: float = 0.0) -> float:
+    try:
+        return float(x)
+    except Exception:
+        return default
+
+
+class AlertPhysicsOrgan:
+    """
+    AlertPhysicsOrgan:
+    Takes core physics + meta signals and produces the 10 alert
+    sub‑pressures + a combined total alert value.
+    """
+
+    def __init__(self, creature=None):
+        self.creature = creature
+
+    # --------------------------------------------------------
+    # MAIN ENTRYPOINT
+    # --------------------------------------------------------
+    def compute(
+        self,
+        *,
+        spark: float = 0.0,
+        spark_var: float = 0.0,
+        drift: float = 0.0,
+        drift_delta: float = 0.0,
+        drift_delta2: float = 0.0,
+        chaos: float = 0.0,
+        storm: float = 0.0,
+        gravity: float = 0.0,          # STM / memory gravity
+        echo: float = 0.0,
+        stability: float = 1.0,
+        symbolic: float = 0.0,
+        concentration: float = 0.0,
+        packet_count: int = 0,
+        max_packets: int = 10,
+        scroll_time: float = 0.0,
+        stability_oscillation: float = 0.0,
+        cluster_entropy: float = 0.0,
+        anchor_loss: float = 0.0,
+        drift_flips: float = 0.0,
+        reject_rate: float = 0.0,
+        mood: float = 0.0,
+        memory_noise: float = 0.0,
+    ) -> Dict[str, Any]:
+        """
+        Compute all 10 alert sub‑pressures and a total alert value.
+
+        All inputs are expected to be roughly in [0,1] or small ranges,
+        but we clamp internally so the outputs are always [0,1].
+        """
+
+        # Normalize packet count
+        max_packets = max(1, max_packets)
+        packet_count_norm = _clamp(packet_count / max_packets)
+
+        spark = _safe(spark)
+        spark_var = _safe(spark_var)
+        drift = _safe(drift)
+        drift_delta = _safe(drift_delta)
+        drift_delta2 = _safe(drift_delta2)
+        chaos = _safe(chaos)
+        storm = _safe(storm)
+        gravity = _safe(gravity)
+        echo = _safe(echo)
+        stability = _clamp(_safe(stability))
+        symbolic = _clamp(_safe(symbolic))
+        concentration = _clamp(_safe(concentration))
+        scroll_time = _clamp(_safe(scroll_time))
+        stability_oscillation = _clamp(_safe(stability_oscillation))
+        cluster_entropy = _clamp(_safe(cluster_entropy))
+        anchor_loss = _clamp(_safe(anchor_loss))
+        drift_flips = _clamp(_safe(drift_flips))
+        reject_rate = _clamp(_safe(reject_rate))
+        mood = _clamp(_safe(mood))
+        memory_noise = _clamp(_safe(memory_noise))
+
+        # ----------------------------------------------------
+        # 1. Threat Geometry
+        # ----------------------------------------------------
+        threat_geometry = (
+            0.4 * _clamp(spark_var) +
+            0.3 * _clamp(abs(drift_delta)) +
+            0.3 * _clamp(storm)
+        )
+        threat_geometry = _clamp(threat_geometry)
+
+        # ----------------------------------------------------
+        # 2. Shadow Memory
+        # ----------------------------------------------------
+        shadow_memory = (
+            0.5 * _clamp(gravity) +
+            0.3 * _clamp(chaos) +
+            0.2 * _clamp(memory_noise)
+        )
+        shadow_memory = _clamp(shadow_memory)
+
+        # ----------------------------------------------------
+        # 3. Storm Resonance
+        # ----------------------------------------------------
+        storm_resonance = (
+            0.5 * _clamp(storm) +
+            0.3 * _clamp(chaos) +
+            0.2 * _clamp(echo)
+        )
+        storm_resonance = _clamp(storm_resonance)
+
+        # ----------------------------------------------------
+        # 4. Cognitive Load
+        # ----------------------------------------------------
+        cognitive_load = (
+            0.4 * symbolic +
+            0.4 * concentration +
+            0.2 * packet_count_norm
+        )
+        cognitive_load = _clamp(cognitive_load)
+
+        # ----------------------------------------------------
+        # 5. Shadow Drift
+        # ----------------------------------------------------
+        shadow_drift = (
+            0.5 * _clamp(abs(drift)) +
+            0.3 * _clamp(abs(drift_delta)) +
+            0.2 * _clamp(abs(drift_delta2))
+        )
+        shadow_drift = _clamp(shadow_drift)
+
+        # ----------------------------------------------------
+        # 6. Heartbeat Sync
+        # ----------------------------------------------------
+        heartbeat_sync = _clamp(scroll_time * (0.5 + 0.5 * stability_oscillation))
+
+        # ----------------------------------------------------
+        # 7. Meaning Collapse
+        # ----------------------------------------------------
+        meaning_collapse = _clamp(
+            (1.0 - stability) * 0.6 +
+            cluster_entropy * 0.2 +
+            reject_rate * 0.2
+        )
+
+        # ----------------------------------------------------
+        # 8. Chaos Gremlin
+        # ----------------------------------------------------
+        chaos_gremlin = _clamp(
+            0.6 * chaos +
+            0.4 * _clamp(abs(spark - chaos))
+        )
+
+        # ----------------------------------------------------
+        # 9. Orientation Loss
+        # ----------------------------------------------------
+        orientation_loss = _clamp(
+            0.5 * cluster_entropy +
+            0.3 * anchor_loss +
+            0.2 * drift_flips
+        )
+
+        # ----------------------------------------------------
+        # 10. Emotional Volcano
+        # ----------------------------------------------------
+        emotional_volcano = _clamp(
+            0.4 * mood +
+            0.3 * symbolic +
+            0.3 * _clamp(storm * chaos)
+        )
+
+        sub_organs = {
+            "threat_geometry": threat_geometry,
+            "shadow_memory": shadow_memory,
+            "storm_resonance": storm_resonance,
+            "cognitive_load": cognitive_load,
+            "shadow_drift": shadow_drift,
+            "heartbeat_sync": heartbeat_sync,
+            "meaning_collapse": meaning_collapse,
+            "chaos_gremlin": chaos_gremlin,
+            "orientation_loss": orientation_loss,
+            "emotional_volcano": emotional_volcano,
+        }
+
+        # Total alert as a soft max / average hybrid
+        avg_alert = sum(sub_organs.values()) / len(sub_organs)
+        max_alert = max(sub_organs.values()) if sub_organs else 0.0
+        total = _clamp(0.6 * max_alert + 0.4 * avg_alert)
+
+        return {
+            "total": total,
+            "sub_organs": sub_organs,
+        }

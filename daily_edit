@@ -1,0 +1,2 @@
+#!/bin/sh
+python3 -c "from daily_editor import daily; daily('edit')"

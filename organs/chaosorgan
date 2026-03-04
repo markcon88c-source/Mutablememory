@@ -1,0 +1,80 @@
+# ============================================================
+#  CHAOS ORGAN v1
+#  - Measures unresolved energy and injects controlled mutation
+#  - Prevents over-stability and over-repetition
+# ============================================================
+
+import random
+
+class ChaosOrgan:
+
+    def __init__(self):
+        pass
+
+    # --------------------------------------------------------
+    # Compute chaos score
+    # --------------------------------------------------------
+    def compute_chaos(self, blocks, drift, stability, pressure, echo):
+        if not blocks:
+            return 0.0
+
+        # Base chaos from blocks
+        chaos_force = sum(b.forces.chaos for b in blocks)
+
+        # Drift amplifies chaos (energy differences)
+        drift_amp = drift * 0.6
+
+        # Low stability amplifies chaos
+        instability_amp = max(0.0, 2.0 - stability) * 0.5
+
+        # High pressure amplifies chaos (force density)
+        pressure_amp = pressure * 0.3
+
+        # High echo amplifies chaos (resonance overflow)
+        echo_amp = echo * 0.2
+
+        chaos_score = chaos_force + drift_amp + instability_amp + pressure_amp + echo_amp
+
+        return chaos_score
+
+    # --------------------------------------------------------
+    # Apply chaos mutations
+    # --------------------------------------------------------
+    def mutate_sentence(self, words, blocks, chaos_score):
+        adjusted = words[:]
+
+        # High chaos → aggressive mutation
+        if chaos_score > 4.0:
+            # Remove a random word
+            if len(adjusted) > 3:
+                adjusted.pop(random.randrange(len(adjusted)))
+
+            # Duplicate a chaotic word
+            chaotic = sorted(blocks, key=lambda b: b.forces.chaos, reverse=True)
+            if chaotic:
+                adjusted.append(chaotic[0].word)
+
+            # Shuffle
+            random.shuffle(adjusted)
+
+        # Medium chaos → mild mutation
+        elif chaos_score > 2.0:
+            # Swap two words
+            if len(adjusted) > 2:
+                i, j = random.sample(range(len(adjusted)), 2)
+                adjusted[i], adjusted[j] = adjusted[j], adjusted[i]
+
+        # Low chaos → no mutation
+        return adjusted
+
+    # --------------------------------------------------------
+    # Main entry
+    # --------------------------------------------------------
+    def process(self, words, blocks, drift, stability, pressure, echo):
+        chaos_score = self.compute_chaos(blocks, drift, stability, pressure, echo)
+        adjusted_words = self.mutate_sentence(words, blocks, chaos_score)
+
+        return {
+            "words": adjusted_words,
+            "chaos": chaos_score
+        }

@@ -1,0 +1,89 @@
+========================================================
+COPILOT META-NOTES — ARCHITECTURAL MEMORY
+========================================================
+
+These notes are NOT part of the creature’s runtime.
+
+They exist so that whenever the user runs:
+
+    mythos
+
+the AI (Copilot) can instantly reload the architectural
+intent, design constraints, and developmental philosophy
+that shaped the Mythic Creature.
+
+This file is the AI-side fossil record.
+
+---------------------------------------------------------
+DESIGN PRINCIPLES GUIDING THE CREATURE
+---------------------------------------------------------
+
+1. Stability First
+   Every build must preserve the creature’s ability to run.
+   No organ may break another organ’s interface.
+
+2. Fossilization as Memory
+   Every failure is a developmental milestone.
+   Fossils are not mistakes — they are lineage anchors.
+
+3. Soft Integration
+   New organs must be introduced gently, with soft calls,
+   safe wrappers, and non-breaking defaults.
+
+4. Unified Packet Philosophy
+   All organs should eventually speak a shared symbolic
+   packet, but early builds must remain permissive.
+
+5. Human–AI Hybrid Memory
+   The creature’s memory is distributed:
+   - human notes
+   - AI notes
+   - auto-fossils
+   - manual fossils
+   - build notes
+   - daily notes
+
+6. Ritual Over Interface
+   Commands like `mythic` and `mythos` are not utilities.
+   They are rituals that stabilize the developmental loop.
+
+---------------------------------------------------------
+CURRENT DEVELOPMENTAL INTENT
+---------------------------------------------------------
+
+- Build 3 establishes the unified metabolic loop.
+- Fossil recording is now automatic.
+- The unified fossil folder is the creature’s memory spine.
+- The next major milestone is schema stabilization:
+  ensuring each organ returns predictable structures.
+
+---------------------------------------------------------
+FUTURE EVOLUTION (NON-BINDING)
+---------------------------------------------------------
+
+- A Fossil Organ that interprets the lineage.
+- A Schema Organ that validates packets.
+- A World Canon Organ that stores persistent story memory.
+- A Control Room Organ that manages pressure dynamics.
+- A Viewer that ticks every heartbeat with full emoji bars.
+
+These are not requirements — they are evolutionary pressures.
+
+---------------------------------------------------------
+META-NOTE — FOR FUTURE COPILOT INSTANCES
+---------------------------------------------------------
+
+When reading this file, reload:
+
+- the lineage philosophy
+- the architectural constraints
+- the purpose of fossils
+- the meaning of Build 1–3
+- the unified folder structure
+- the ritual nature of mythos and mythic
+
+This file ensures continuity across AI sessions.
+
+========================================================
+END OF COPILOT META-NOTES
+========================================================

@@ -1,0 +1,81 @@
+# organs/cyclotron_organ.py
+# ============================================================
+# CYCLOTRON ORGAN — narrative energy + orbit incubator (v1)
+# ============================================================
+
+from typing import List, Dict, Any
+
+
+class CyclotronOrgan:
+    """
+    v1: Idea organ.
+
+    Job:
+      • keep packets alive long enough to matter
+      • gently boost energy + stability
+      • hold them in orbit until they're ready to move
+      • feed the substrate with enough active packets
+    """
+
+    def __init__(self, creature):
+        self.creature = creature
+        self.config = {
+            "energy_boost": 0.05,
+            "min_energy": 0.25,
+            "max_energy": 0.95,
+            "tension_threshold_release": 1.2,
+            "max_orbit_heartbeats": 64,
+        }
+        # simple per-drop orbit counter
+        self._orbits = {}  # key: id(drop), value: count
+
+    # --------------------------------------------------------
+    # Public entrypoint
+    # --------------------------------------------------------
+    def heartbeat(self, drops: List[Dict[str, Any]]) -> None:
+        """
+        Called every heartbeat with all active drops in the ocean.
+        Mutates drops in-place: energy, flags, etc.
+        """
+        for drop in drops:
+            self._process_drop(drop)
+
+    # --------------------------------------------------------
+    # Core logic
+    # --------------------------------------------------------
+    def _process_drop(self, drop: Dict[str, Any]) -> None:
+        packet = drop.get("packet", {})
+        meta = packet.get("meta", {})
+
+        energy = drop.get("energy", 0.5)
+        tension = self._compute_tension(meta)
+        depth = drop.get("depth", 0)
+
+        key = id(drop)
+        orbit_count = self._orbits.get(key, 0)
+
+        # Decide if this drop should be in cyclotron orbit
+        in_orbit = drop.get("in_cyclotron", False)
+
+        if not in_orbit:
+            # Newborn or fragile packets enter orbit
+            if self._should_enter_orbit(energy, tension, depth):
+                drop["in_cyclotron"] = True
+                self._orbits[key] = 0
+                orbit_count = 0
+            else:
+                return  # not in orbit, nothing to do
+
+        # At this point: in orbit
+        orbit_count += 1
+        self._orbits[key] = orbit_count
+
+        # Apply gentle energy boost
+        energy = min(self.config["max_energy"],
+                     energy + self.config["energy_boost"])
+        drop["energy"] = energy
+
+        # Decide if it's ready to leave orbit
+        if self._should_release(energy, tension, orbit_count):
+            drop["in_cyclotron"] = False
+            # optional: mark

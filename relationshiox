@@ -1,0 +1,23 @@
+
+relations = [
+    "near",
+    "at",
+    "in",
+    "with",
+    "toward",
+    "from",
+    "along",
+    "within",
+    "beyond",
+    "beneath",
+    "above",
+    "around",
+    "between",
+    "across",
+    "through",
+    "beside",
+    "amid",
+    "upon",
+    "before",
+    "after"
+]

@@ -1,0 +1,25 @@
+from organs.base_packet_source import BasePacketSource
+
+class VocabPacketSource(BasePacketSource):
+    """
+    Cathedral-era meaning-aware packet emitter.
+    Wraps VocabularyOrgan and emits packets containing
+    both the surface word and its metabolic context.
+    """
+
+    def __init__(self, creature):
+        super().__init__()
+        self.creature = creature
+        self.vocab = creature.vocabulary
+
+    def get_packets(self):
+        word = self.vocab.get_word()
+        idx = self.vocab.index
+
+        return [{
+            "type": "vocab",
+            "word": word,
+            "index": idx,
+            "cycle": idx,
+            "source": "VocabularyOrgan"
+        }]

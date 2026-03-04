@@ -1,0 +1,1576 @@
+{
+  "heartbeat_count": 43,
+  "state": {
+    "heartbeat": 43,
+    "mood": "tense",
+    "event": "focus",
+    "pressure": 90
+  },
+  "stm": {
+    "levels": [
+      [
+        [
+          "spark",
+          "pause",
+          "echo",
+          "focus",
+          "drift"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ]
+    ],
+    "word_data": {
+      "spark": {
+        "signature": 451996392943999,
+        "level": 0,
+        "micro": 0
+      },
+      "pause": {
+        "signature": 739685169051328,
+        "level": 0,
+        "micro": 0
+      },
+      "echo": {
+        "signature": 253532602697258,
+        "level": 0,
+        "micro": 0
+      },
+      "focus": {
+        "signature": 256234210221116,
+        "level": 0,
+        "micro": 0
+      },
+      "drift": {
+        "signature": 182394707883039,
+        "level": 0,
+        "micro": 0
+      }
+    },
+    "_incoming": [],
+    "_returning": []
+  },
+  "world": {
+    "ideas": [
+      {
+        "id": 1,
+        "words": [
+          "🎯",
+          "'spark'",
+          "rises",
+          "through",
+          "the",
+          "spine,",
+          "carrying",
+          "quietly",
+          "intent."
+        ],
+        "block_id": 2,
+        "signature": [
+          0.8820233730465505,
+          0.9761173992935379,
+          0.2042949406254584
+        ],
+        "age": 43,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "0.976117399293538",
+          "resonance": "0.180192912626812",
+          "opposition": "-0.882023373046551",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 2,
+        "words": [
+          "🎯",
+          "A",
+          "pause",
+          "stirs",
+          "near",
+          "'pause',",
+          "shaping",
+          "its",
+          "meaning."
+        ],
+        "block_id": 7,
+        "signature": [
+          0.08344393792435123,
+          0.489257766290798,
+          0.6678679194112265
+        ],
+        "age": 42,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.832095914201520",
+          "drift": "0.489257766290798",
+          "resonance": "0.055729529209016",
+          "opposition": "-0.083443937924351",
+          "clustering": "0.022195019915178"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 3,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'pause'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 41,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 4,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'pause'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 40,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 5,
+        "words": [
+          "🎯",
+          "'focus'",
+          "rises",
+          "through",
+          "the",
+          "spine,",
+          "carrying",
+          "quietly",
+          "intent."
+        ],
+        "block_id": 7,
+        "signature": [
+          0.3838251256585741,
+          -0.507268608033586,
+          -0.45787082356191955
+        ],
+        "age": 39,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.783765818884966",
+          "drift": "-0.507268608033586",
+          "resonance": "-0.175742326389049",
+          "opposition": "-0.383825125658574",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 6,
+        "words": [
+          "'focus'"
+        ],
+        "block_id": 3,
+        "signature": [
+          -0.8248571289995754,
+          0.7743664841924851,
+          0.6003804864526969
+        ],
+        "age": 39,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "0.774366484192485",
+          "resonance": "-0.495228124362740",
+          "opposition": "0.824857128999575",
+          "clustering": "0.022195019915178"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 7,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 38,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 8,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 37,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 9,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 36,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 10,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 35,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 11,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 34,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 12,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 33,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 13,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "quietly",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 32,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 14,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 31,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 15,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 30,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 16,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 29,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 17,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 28,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 18,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 27,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 19,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 26,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 20,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 25,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 21,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 24,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 22,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 23,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 23,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 22,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 24,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 21,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 25,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 20,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 26,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 19,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 27,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 18,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 28,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 17,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 29,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 16,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 30,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 15,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 31,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 14,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 32,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 13,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 33,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 12,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 34,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 11,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 35,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 10,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 36,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 9,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 37,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 8,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 38,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 7,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 39,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 6,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 40,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 5,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 41,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 4,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 42,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 3,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 43,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 2,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      },
+      {
+        "id": 44,
+        "words": [
+          "🎯",
+          "The",
+          "creature",
+          "sharply",
+          "drifts",
+          "around",
+          "the",
+          "word",
+          "'focus'."
+        ],
+        "block_id": 5,
+        "signature": [
+          0.9309297727238344,
+          -0.0281446068743747,
+          0.8364686635702636
+        ],
+        "age": 1,
+        "gravity": "0.0",
+        "forces": {
+          "strength": "0.0",
+          "drift": "-0.028144606874375",
+          "resonance": "0.778693582868075",
+          "opposition": "-0.930929772723834",
+          "clustering": "0E-15"
+        },
+        "attached_metrics": []
+      }
+    ],
+    "daily_note": [],
+    "event_log": [],
+    "hooks": {}
+  }
+}

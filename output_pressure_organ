@@ -1,0 +1,51 @@
+# internal_output_meter.py
+
+class InternalOutputMeter:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.candidates = 0
+        self.suffix_counts = {}
+        self.burst = 0
+        self.current_burst = 0
+        self.samples = []  # NEW: store up to 50 sample words
+
+    def record_candidate(self, word):
+        # Count total candidates
+        self.candidates += 1
+
+        # Store up to 50 samples
+        if len(self.samples) < 50:
+            self.samples.append(word)
+
+        # Track suffixes (last 4 letters)
+        suffix = word[-4:].lower()
+        self.suffix_counts[suffix] = self.suffix_counts.get(suffix, 0) + 1
+
+        # Burst tracking
+        self.current_burst += 1
+        if self.current_burst > self.burst:
+            self.burst = self.current_burst
+
+    def end_cycle(self):
+        # Compute attractor dominance
+        if self.suffix_counts:
+            dominant_suffix = max(self.suffix_counts, key=self.suffix_counts.get)
+            dominant_count = self.suffix_counts[dominant_suffix]
+            dominance = dominant_count / max(1, self.candidates)
+        else:
+            dominant_suffix = None
+            dominance = 0
+
+        summary = {
+            "candidates": self.candidates,
+            "dominant_suffix": dominant_suffix,
+            "dominance": round(dominance, 3),
+            "burst_size": self.burst,
+            "compression_ratio": f"{self.candidates} → 1",
+            "samples": self.samples[:]  # NEW: return the 50-word sample
+        }
+
+        self.reset()
+        return summary

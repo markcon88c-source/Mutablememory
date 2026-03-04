@@ -1,0 +1,4 @@
+
+Launching creature...
+
+Snapshot created: /storage/emulated/0/MutableMemory/critter/code_builds/2026-02-15_21-52-34

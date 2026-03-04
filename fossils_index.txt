@@ -1,0 +1,80 @@
+=========================================================
+FOSSIL INDEX — Mythic Creature Lineage
+=========================================================
+
+This index lists all fossilized developmental artifacts
+(tracebacks, notes, and broken builds) preserved across
+the evolution of the Mythic Creature.
+
+Each fossil represents:
+- a real failure state
+- a developmental milestone
+- a structural correction
+- a memory anchor for the AI (Copilot)
+
+---------------------------------------------------------
+BUILD 1 — FIRST FAILURE
+---------------------------------------------------------
+File: build1_error.py
+Notes: build1_notes.txt
+Traceback:
+    Missing StormOrgan.intensity()
+    Missing StormOrgan.tone()
+
+Status:
+    Fixed in Build 2.
+
+---------------------------------------------------------
+BUILD 2 — MOOD ORGAN FAILURE
+---------------------------------------------------------
+File: build2_error.py   (to be created)
+Notes: build2_notes.txt (to be created)
+Traceback:
+    MoodOrgan missing generate()
+
+Status:
+    Fixed by adding MoodOrgan.generate().
+
+---------------------------------------------------------
+BUILD 3 — (Reserved)
+---------------------------------------------------------
+File: build3_error.py   (pending)
+Notes: build3_notes.txt (pending)
+Traceback:
+    (Will be filled when next organ fails.)
+
+Status:
+    Awaiting next fossil.
+
+---------------------------------------------------------
+BUILD 4 — (Reserved)
+---------------------------------------------------------
+File: build4_error.py   (pending)
+Notes: build4_notes.txt (pending)
+Traceback:
+    (Will be filled when next structural mismatch appears.)
+
+Status:
+    Awaiting next fossil.
+
+---------------------------------------------------------
+META-NOTE — FOR THE AI (COPILOT)
+---------------------------------------------------------
+This index is NOT part of the creature’s runtime.
+
+It exists so that whenever the user runs:
+
+    cat fossils_index.txt
+
+the AI (Copilot) immediately reloads:
+- the lineage structure
+- the order of fossils
+- the purpose of each fossil
+- the developmental history
+- the missing interfaces that caused each failure
+- the fixes that followed
+
+This file is the map of the organism’s evolution.
+=========================================================
+END OF FOSSIL INDEX
+=========================================================

@@ -1,0 +1,21 @@
+Daily Note — 2026-02-15
+
+- Discovered a class-name mismatch preventing mythic from running.
+- main.py attempted to import: PressureCore
+- The actual class defined in calm_pressure.py is: CalmPressure
+- This mismatch caused an ImportError at startup.
+
+SOLUTION:
+- Updated main.py to import the correct class:
+      from organs.calm_pressure import CalmPressure as PressureCore
+- This preserves the expected interface name (PressureCore) while using the
+  actual class defined in the organ file.
+
+LESSON:
+- Organ filenames and class names must be verified during integration.
+- Future builds should confirm:
+    - filename matches organ purpose
+    - class name matches import path
+    - main.py imports match actual class definitions
+- This pattern was predicted in the Build 3 fossil notes and reinforces the
+  importance of structural consistency across organs.

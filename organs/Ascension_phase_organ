@@ -1,0 +1,101 @@
+# ============================================================
+#  ASCENSION PHASE ORGAN v1
+#  - Selects 2–5 extreme-force words for ascension
+#  - Holds mid-band words for metabolic phase
+#  - Runs Ascensio until at least one block ascends
+# ============================================================
+
+import random
+
+class AscensionPhaseOrgan:
+
+    def __init__(self, mathblock_organ, ascension_organ,
+                 low_thresh=0.4, high_thresh=1.2):
+        self.mathblock_organ = mathblock_organ
+        self.ascension_organ = ascension_organ
+        self.low_thresh = low_thresh
+        self.high_thresh = high_thresh
+
+    # --------------------------------------------------------
+    # Classify blocks into low / mid / high force bands
+    # --------------------------------------------------------
+    def classify_blocks(self, blocks):
+        low = []
+        mid = []
+        high = []
+
+        for b in blocks:
+            core = b.core
+            if core < self.low_thresh:
+                low.append(b)
+            elif core > self.high_thresh:
+                high.append(b)
+            else:
+                mid.append(b)
+
+        return low, mid, high
+
+    # --------------------------------------------------------
+    # Select 2–5 extreme words for ascension
+    # --------------------------------------------------------
+    def select_cluster(self, low, high):
+        pool = low + high
+
+        if not pool:
+            # fallback: pick 2 random mid-band blocks
+            return []
+
+        k = min(len(pool), random.randint(2, 5))
+        return random.sample(pool, k)
+
+    # --------------------------------------------------------
+    # Run Ascensio until at least one block ascends
+    # --------------------------------------------------------
+    def run_ascension(self, cluster, identity, memory, world):
+        ascended = []
+        canon = []
+
+        # Keep updating until one ascends
+        while not ascended:
+            for block in cluster:
+                self.ascension_organ.update(block, identity, memory, world)
+
+                if block.ascended and block not in ascended:
+                    ascended.append(block)
+
+                if block.canon and block not in canon:
+                    canon.append(block)
+
+            # Safety: break if nothing ascends after many cycles
+            if len(ascended) == 0 and all(b.level >= 11 for b in cluster):
+                break
+
+        return ascended, canon
+
+    # --------------------------------------------------------
+    # Main entry: process a batch of words
+    # --------------------------------------------------------
+    def process_words(self, words, identity, memory, world):
+        # 1. Build MathBlocks
+        blocks = [self.mathblock_organ.build_block(w) for w in words]
+
+        # 2. Classify into force bands
+        low, mid, high = self.classify_blocks(blocks)
+
+        # 3. Select ascension cluster (2–5 extreme words)
+        cluster = self.select_cluster(low, high)
+
+        # 4. Run ascension until success
+        ascended, canon = self.run_ascension(cluster, identity, memory, world)
+
+        # 5. Return:
+        #    - ascended blocks
+        #    - canon blocks
+        #    - mid-band blocks (for metabolic phase)
+        return {
+            "ascended": ascended,
+            "canon": canon,
+            "mid": mid,
+            "cluster": cluster,
+            "all_blocks": blocks
+        }

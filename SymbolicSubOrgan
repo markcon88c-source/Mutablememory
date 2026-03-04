@@ -1,0 +1,16 @@
+# -----------------------------
+# Compute the 10 symbolic sub‑forces
+# -----------------------------
+def compute_symbolic_subforces(self, meta, pkt):
+    return {
+        "pattern_gravity":            pkt.get("pattern_gravity", 0.0),
+        "conceptual_compression":     pkt.get("conceptual_compression", 0.0),
+        "ritual_lock_in":             pkt.get("ritual_lock_in", 0.0),
+        "semantic_anchoring":         pkt.get("semantic_anchoring", 0.0),
+        "coherence_binding":          pkt.get("coherence_binding", 0.0),
+        "narrative_momentum":         pkt.get("narrative_momentum", 0.0),
+        "structural_symmetry":        pkt.get("structural_symmetry", 0.0),
+        "compression_heat":           pkt.get("compression_heat", 0.0),
+        "semantic_inhibition":        pkt.get("semantic_inhibition", 0.0),
+        "conceptual_crystallization": pkt.get("conceptual_crystallization", 0.0),
+    }

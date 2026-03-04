@@ -1,0 +1,117 @@
+# organs/flow_viewer_organ.py
+
+class FlowViewerOrgan:
+    """
+    FLOW VIEWER ORGAN
+    -----------------
+    Shows the entire metabolic circulation of the creature:
+      1. Word Flow (reservoir → vocab)
+      2. Meaning Flow (vocab → meaning)
+      3. Sentence Flow (meaning → sentence builder)
+      4. Stat Flow (pressures → stat emitter)
+      5. Outgoing Flow (router → all organs)
+
+    Uses a 5‑color safety system:
+      🟢  Flow alive
+      🟡  Organ alive but no packets
+      🔴  Organ not receiving anything
+      🔵  NO WORDS (MeaningOrgan starved)
+      🟣  NO STATS (StatEmitter starved)
+    """
+
+    GREEN  = "🟢"
+    YELLOW = "🟡"
+    RED    = "🔴"
+    BLUE   = "🔵"   # no words
+    PURPLE = "🟣"   # no stats
+
+    def __init__(self, creature):
+        self.creature = creature
+
+    # ---------------------------------------------------------
+    # COLOR HELPERS
+    # ---------------------------------------------------------
+    def color_word_flow(self, word_count):
+        if word_count is None or word_count == 0:
+            return self.BLUE
+        return self.GREEN
+
+    def color_meaning_flow(self, packet_count):
+        if packet_count is None or packet_count == 0:
+            return self.BLUE
+        return self.GREEN
+
+    def color_sentence_flow(self, sentence_count):
+        if sentence_count is None or sentence_count == 0:
+            return self.YELLOW
+        return self.GREEN
+
+    def color_stat_flow(self, stats):
+        if not stats:
+            return self.PURPLE
+        return self.GREEN
+
+    def color_outgoing(self, packets):
+        if packets is None:
+            return self.RED
+        if len(packets) == 0:
+            return self.YELLOW
+        return self.GREEN
+
+    # ---------------------------------------------------------
+    # MAIN VIEW
+    # ---------------------------------------------------------
+    def show(self, vocab_stats=None, meaning_packets=None,
+             sentence_packets=None, stat_packet=None, router_map=None):
+
+        print("\n🌊 FLOW VIEWER — FULL METABOLIC MAP")
+        print("-----------------------------------------")
+
+        # -------------------------
+        # WORD FLOW
+        # -------------------------
+        word_count = len(vocab_stats) if vocab_stats else 0
+        print("\nWORD FLOW")
+        print("-----------------------------------------")
+        print(f"Words pulled this beat: {word_count} {self.color_word_flow(word_count)}")
+
+        # -------------------------
+        # MEANING FLOW
+        # -------------------------
+        meaning_count = len(meaning_packets) if meaning_packets else 0
+        print("\nMEANING FLOW")
+        print("-----------------------------------------")
+        print(f"Meaning packets: {meaning_count} {self.color_meaning_flow(meaning_count)}")
+
+        # -------------------------
+        # SENTENCE FLOW
+        # -------------------------
+        sentence_count = len(sentence_packets) if sentence_packets else 0
+        print("\nSENTENCE FLOW")
+        print("-----------------------------------------")
+        print(f"Sentence packets: {sentence_count} {self.color_sentence_flow(sentence_count)}")
+
+        # -------------------------
+        # STAT FLOW
+        # -------------------------
+        print("\nSTAT FLOW")
+        print("-----------------------------------------")
+        if stat_packet:
+            print(f"Stats emitted: {self.GREEN}")
+            for k, v in stat_packet.items():
+                print(f"  {k}: {v}")
+        else:
+            print(f"Stats emitted: {self.PURPLE}")
+
+        # -------------------------
+        # OUTGOING FLOW MAP
+        # -------------------------
+        print("\nOUTGOING FLOW")
+        print("-----------------------------------------")
+
+        if router_map:
+            for organ_name, packets in router_map.items():
+                color = self.color_outgoing(packets)
+                print(f"{organ_name:20} {color}")
+        else:
+            print("Router map unavailable.")

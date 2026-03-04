@@ -1,0 +1,23 @@
+class ClaimEngineMachine:
+    def __init__(self):
+        self.active = False
+        self.position = None
+        self.factory_state = None
+
+    def dock(self, factory_state):
+        self.factory_state = factory_state
+
+    def move_to(self, position):
+        self.position = position
+
+    def turn_on(self):
+        self.active = True
+
+    def turn_off(self):
+        self.active = False
+
+    def run(self):
+        if not self.active:
+            return
+        # non‑interference: no external calls, no shared state writes
+        pass

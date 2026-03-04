@@ -1,0 +1,18 @@
+import random
+from worldbuilding_reservoir import worldbuilding_reservoir
+
+import_pressure = 1.0
+active_vocab = []
+
+def importer_tick(symbolic_pressure, alert_pressure):
+    global import_pressure, active_vocab
+
+    import_pressure -= 0.01 + (symbolic_pressure * 0.005)
+
+    if import_pressure <= 0.70:
+        if worldbuilding_reservoir:
+            w = random.choice(worldbuilding_reservoir)
+            active_vocab.append(w)
+        import_pressure = 1.0
+
+    return active_vocab

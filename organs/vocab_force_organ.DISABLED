@@ -1,0 +1,67 @@
+# vocab_force_organ.py
+# Generates force-roll physics for each word in STM.
+# Stores results in creature.vocab as a rolling buffer.
+
+import random
+import time
+
+class VocabForceOrgan:
+    def __init__(self, creature, max_entries=200):
+        self.creature = creature
+        self.max_entries = max_entries
+
+        # Ensure vocab exists
+        if not hasattr(self.creature, "vocab"):
+            self.creature.vocab = []
+
+    def _force_roll(self, word):
+        """
+        Hybrid physics:
+        - stable base from word length + mathblock id
+        - chaotic spikes from random + heartbeat
+        """
+        base = len(word) * 1000
+        chaos = random.randint(0, 500)
+
+        # Try to get mathblock ID
+        try:
+            block_id = self.creature.mathblocks.get_mathblock_for_word(word)
+            block_factor = (block_id + 1) * 500
+        except:
+            block_factor = 500
+
+        spark = base + block_factor + chaos
+        drift = random.randint(-50, 50)
+        echo = spark * random.uniform(0.8, 1.4)
+        chaos_f = random.randint(0, 2000)
+        clarity = random.randint(0, 2000)
+        memory = random.randint(0, 50)
+        pressure = spark + chaos_f + clarity
+        word_pressure = pressure + int(echo)
+
+        return {
+            "word": word,
+            "spark": int(spark),
+            "drift": int(drift),
+            "echo": int(echo),
+            "chaos": int(chaos_f),
+            "clarity": int(clarity),
+            "memory": int(memory),
+            "pressure": int(pressure),
+            "word_pressure": int(word_pressure)
+        }
+
+    def update(self):
+        """
+        Called every heartbeat.
+        Generates force-rolls for active STM words.
+        """
+        active = self.creature.stm.active_words
+
+        for word in active:
+            entry = self._force_roll(word)
+            self.creature.vocab.append(entry)
+
+        # Trim buffer
+        if len(self.creature.vocab) > self.max_entries:
+            self.creature.vocab = self.creature.vocab[-self.max_entries:]
